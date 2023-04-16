@@ -17,25 +17,32 @@ export class PluginView implements View {
 	private textElem_: HTMLElement;
 
 	constructor(doc: Document, config: Config) {
+		// DOM --------------------------
 		// Create a root element for the plugin
 		this.element = doc.createElement('div');
 		this.element.classList.add(className());
-		// Bind view props to the element
-		config.viewProps.bindClassModifiers(this.element);
-
-		// Receive the bound value from the controller
-		this.value_ = config.value;
-		// Handle 'change' event of the value
-		this.value_.emitter.on('change', this.onValueChange_.bind(this));
 
 		// Create child elements
 		this.textElem_ = doc.createElement('div');
 		this.textElem_.classList.add(className('text'));
 		this.element.appendChild(this.textElem_);
 
+
+
+
+		// Events ------------------------
+		// Receive the bound value from the controller
+		this.value_ = config.value;
+		// Handle 'change' event of the value
+		this.value_.emitter.on('change', this.onValueChange_.bind(this));
+
+		// Bind view props to the element
+		config.viewProps.bindClassModifiers(this.element);
+
 		// Apply the initial value
 		this.refresh_();
 
+		// View dispose handler
 		config.viewProps.handleDispose(() => {
 			// Called when the view is disposing
 			console.log('TODO: dispose view');
