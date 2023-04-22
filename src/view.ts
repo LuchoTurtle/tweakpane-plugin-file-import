@@ -12,22 +12,25 @@ const className = ClassName('tmp');
 // Custom view class should implement `View` interface
 export class PluginView implements View {
 	public readonly element: HTMLElement;
+
+	private doc_: Document;
+	private fileIconEl: HTMLElement;
+
 	private value_: Value<number>;
-	private dotElems_: HTMLElement[] = [];
-	private textElem_: HTMLElement;
+
 
 	constructor(doc: Document, config: Config) {
 		// DOM --------------------------
 		// Create a root element for the plugin
+		this.doc_ = doc;
+
 		this.element = doc.createElement('div');
 		this.element.classList.add(className());
 
 		// Create child elements
-		this.textElem_ = doc.createElement('div');
-		this.textElem_.classList.add(className('text'));
-		this.element.appendChild(this.textElem_);
-
-
+		this.fileIconEl = doc.createElement('div');
+		this.fileIconEl.classList.add(className('icon'));
+		this.element.appendChild(this.fileIconEl);
 
 
 		// Events ------------------------
@@ -52,33 +55,6 @@ export class PluginView implements View {
 	private refresh_(): void {
 		const rawValue = this.value_.rawValue;
 
-		this.textElem_.textContent = rawValue.toFixed(2);
-
-		while (this.dotElems_.length > 0) {
-			const elem = this.dotElems_.shift();
-			if (elem) {
-				this.element.removeChild(elem);
-			}
-		}
-
-		const doc = this.element.ownerDocument;
-		const dotCount = Math.floor(rawValue);
-		for (let i = 0; i < dotCount; i++) {
-			const dotElem = doc.createElement('div');
-			dotElem.classList.add(className('dot'));
-
-			if (i === dotCount - 1) {
-				const fracElem = doc.createElement('div');
-				fracElem.classList.add(className('frac'));
-				const frac = rawValue - Math.floor(rawValue);
-				fracElem.style.width = `${frac * 100}%`;
-				fracElem.style.opacity = String(mapRange(frac, 0, 1, 1, 0.2));
-				dotElem.appendChild(fracElem);
-			}
-
-			this.dotElems_.push(dotElem);
-			this.element.appendChild(dotElem);
-		}
 	}
 
 	private onValueChange_() {

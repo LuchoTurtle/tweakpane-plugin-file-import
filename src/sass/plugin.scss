@@ -30,25 +30,6 @@
 		position: absolute;
 		right: 2px;
 	}
-	&_dot {
-		height: 10px;
-		line-height: 10px;
-		position: relative;
-		text-align: center;
-
-		&::before {
-			background-color: var(--in-fg);
-			content: '';
-			border-radius: 1px;
-			height: 2px;
-			left: 50%;
-			margin-left: -1px;
-			margin-top: -1px;
-			position: absolute;
-			top: 50%;
-			width: 2px;
-		}
-	}
 	&_frac {
 		background-color: var(--in-fg);
 		border-radius: 1px;
@@ -57,5 +38,48 @@
 		margin-top: -1px;
 		position: absolute;
 		top: 50%;
+	}
+	&_icon {
+		// https://css.gg/software-upload
+		.gg-software-upload {
+			box-sizing: border-box;
+			position: relative;
+			display: block;
+			transform: scale(var(--ggs, 1));
+			width: 16px;
+			height: 6px;
+			border: 2px solid;
+			border-top: 0;
+			border-bottom-left-radius: 2px;
+			border-bottom-right-radius: 2px;
+			margin-top: 8px;
+		}
+
+		.gg-software-upload::after {
+			content: '';
+			display: block;
+			box-sizing: border-box;
+			position: absolute;
+			width: 8px;
+			height: 8px;
+			border-left: 2px solid;
+			border-top: 2px solid;
+			transform: rotate(45deg);
+			left: 2px;
+			bottom: 4px;
+		}
+
+		.gg-software-upload::before {
+			content: '';
+			display: block;
+			box-sizing: border-box;
+			position: absolute;
+			border-radius: 3px;
+			width: 2px;
+			height: 10px;
+			background: currentColor;
+			left: 5px;
+			bottom: 3px;
+		}
 	}
 }
