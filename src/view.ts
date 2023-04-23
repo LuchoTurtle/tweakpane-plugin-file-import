@@ -1,7 +1,7 @@
 import {ClassName, mapRange, Value, View, ViewProps} from '@tweakpane/core';
 
 interface Config {
-	value: Value<number>;
+	value: Value<File>;
 	viewProps: ViewProps;
 }
 
@@ -16,7 +16,7 @@ export class PluginView implements View {
 	private doc_: Document;
 	private fileIconEl: HTMLElement;
 
-	private value_: Value<number>;
+	private value_: Value<File>;
 
 
 	constructor(doc: Document, config: Config) {
@@ -42,9 +42,6 @@ export class PluginView implements View {
 		// Bind view props to the element
 		config.viewProps.bindClassModifiers(this.element);
 
-		// Apply the initial value
-		this.refresh_();
-
 		// View dispose handler
 		config.viewProps.handleDispose(() => {
 			// Called when the view is disposing
@@ -52,12 +49,8 @@ export class PluginView implements View {
 		});
 	}
 
-	private refresh_(): void {
-		const rawValue = this.value_.rawValue;
-
-	}
-
 	private onValueChange_() {
-		this.refresh_();
+		const rawValue = this.value_.rawValue;
+		console.log(rawValue)
 	}
 }

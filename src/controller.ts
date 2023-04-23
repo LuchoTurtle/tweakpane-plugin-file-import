@@ -10,18 +10,19 @@ import {
 import {PluginView} from './view';
 
 interface Config {
-	value: Value<number>;
+	value: Value<File>;
 	viewProps: ViewProps;
 }
 
 // Custom controller class should implement `Controller` interface
 export class PluginController implements Controller<PluginView> {
-	public readonly value: Value<number>;
+	public readonly value: Value<File>;
+
 	public readonly view: PluginView;
 	public readonly viewProps: ViewProps;
 
 	constructor(doc: Document, config: Config) {
-		this.onPoint_ = this.onPoint_.bind(this);
+		this.onClick_ = this.onClick_.bind(this);
 
 		// Receive the bound value from the plugin
 		this.value = config.value;
@@ -41,21 +42,28 @@ export class PluginController implements Controller<PluginView> {
 
 		// You can use `PointerHandler` to handle pointer events in the same way as Tweakpane do
 		const ptHandler = new PointerHandler(this.view.element);
-		ptHandler.emitter.on('down', this.onPoint_);
-		ptHandler.emitter.on('move', this.onPoint_);
-		ptHandler.emitter.on('up', this.onPoint_);
+		ptHandler.emitter.on('down', this.onClick_);
 	}
 
-	private onPoint_(ev: PointerHandlerEvent) {
-		const data = ev.data;
-		if (!data.point) {
-			return;
-		}
+	private onClick_(ev: PointerHandlerEvent) {
 
-		// Update the value by user input
-		const dx =
-			constrainRange(data.point.x / data.bounds.width + 0.05, 0, 1) * 10;
-		const dy = data.point.y / 10;
-		this.value.rawValue = Math.floor(dy) * 10 + dx;
+		// Creates hidden `input` and mimicks click to open file explorer
+		const input = document.createElement('input');
+		input.setAttribute('type', 'file');
+		input.style.opacity = '0';
+		input.style.position = 'fixed';
+		document.body.appendChild(input);
+
+		// Adds event listener when user chooses file
+		input.addEventListener('input', (ev) => {
+			if(input.files && input.files.length > 0) {
+				let file = input.files[0];
+				this.value.rawValue = file;
+			}
+			document.body.removeChild(input);                
+		}, { once: true })
+
+		// Click hidden input to open file explorer
+		input.click();
 	}
 }
