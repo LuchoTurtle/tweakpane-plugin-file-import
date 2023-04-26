@@ -1,7 +1,7 @@
 import {ClassName, mapRange, Value, View, ViewProps} from '@tweakpane/core';
 
 interface Config {
-	value: Value<File>;
+	value: Value<File | null>;
 	viewProps: ViewProps;
 }
 
@@ -14,9 +14,10 @@ export class PluginView implements View {
 	public readonly element: HTMLElement;
 
 	private doc_: Document;
-	private fileIconEl: HTMLElement;
+	private fileIconEl_: HTMLElement;
+	private textEl_: HTMLElement;
 
-	private value_: Value<File>;
+	private value_: Value<File | null>;
 
 
 	constructor(doc: Document, config: Config) {
@@ -28,10 +29,12 @@ export class PluginView implements View {
 		this.element.classList.add(className());
 
 		// Create child elements
-		this.fileIconEl = doc.createElement('div');
-		this.fileIconEl.classList.add(className('icon'));
-		this.element.appendChild(this.fileIconEl);
+		this.fileIconEl_ = doc.createElement('div');
+		this.fileIconEl_.classList.add(className('icon'));
+		this.element.appendChild(this.fileIconEl_);
 
+		this.textEl_ = doc.createElement('div');
+		this.textEl_.classList.add(className('text'));
 
 		// Events ------------------------
 		// Receive the bound value from the controller
@@ -50,7 +53,15 @@ export class PluginView implements View {
 	}
 
 	private onValueChange_() {
-		const rawValue = this.value_.rawValue;
-		console.log(rawValue)
+		const fileObj = this.value_.rawValue;
+
+		if(fileObj) {
+			// Setting the text of the file to the element
+			this.textEl_.textContent = fileObj.name;
+
+			// Removing icon and adding text
+			this.element.appendChild(this.textEl_);
+			this.element.removeChild(this.fileIconEl_)
+		}
 	}
 }

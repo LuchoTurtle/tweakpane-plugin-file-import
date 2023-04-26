@@ -10,13 +10,13 @@ import {
 import {PluginView} from './view';
 
 interface Config {
-	value: Value<File>;
+	value: Value<File | null>;
 	viewProps: ViewProps;
 }
 
 // Custom controller class should implement `Controller` interface
 export class PluginController implements Controller<PluginView> {
-	public readonly value: Value<File>;
+	public readonly value: Value<File | null>;
 
 	public readonly view: PluginView;
 	public readonly viewProps: ViewProps;
