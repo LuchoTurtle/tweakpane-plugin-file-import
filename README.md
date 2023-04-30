@@ -62,11 +62,11 @@ pane.registerPlugin(TemplatePlugin);
 ## Usage
 ```js
 const params = {
-  prop: 3,
+  test: 3,
 };
 
 // TODO: Update parameters for your plugin
-pane.addInput(params, 'prop', {
+pane.addInput(params, 'test', {
   view: 'dots',
 }).on('change', (ev) => {
   console.log(ev.value);
