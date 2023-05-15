@@ -3,6 +3,8 @@ import {ClassName, mapRange, Value, View, ViewProps} from '@tweakpane/core';
 interface Config {
 	value: Value<File | null>;
 	viewProps: ViewProps;
+
+	lineCount: number
 }
 
 // Create a class name generator from the view name
@@ -26,6 +28,7 @@ export class PluginView implements View {
 		this.doc_ = doc;
 
 		this.element = doc.createElement('div');
+		this.element.style.height = `calc(var(--bld-us) * ${config.lineCount})`;
 		this.element.classList.add(className());
 
 		// Create child elements

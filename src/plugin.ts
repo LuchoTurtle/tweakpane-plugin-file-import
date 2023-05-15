@@ -11,6 +11,7 @@ import {PluginController} from './controller';
 
 export interface PluginInputParams extends BaseInputParams {
 	view: 'dots';
+	lineCount?: number
 }
 
 // NOTE: You can see JSDoc comments of `InputBindingPlugin` for details about each property
@@ -48,7 +49,7 @@ export const TemplateInputPlugin: InputBindingPlugin<
 			// `view` option may be useful to provide a custom control for primitive values
 			view: p.required.constant('dots'),
 
-			//max: p.optional.number,
+			lineCount: p.optional.number,
 			//min: p.optional.number,
 			//step: p.optional.number,
 		});
@@ -102,6 +103,8 @@ export const TemplateInputPlugin: InputBindingPlugin<
 		return new PluginController(args.document, {
 			value: args.value,
 			viewProps: args.viewProps,
+
+			lineCount: args.params.lineCount ?? 3
 		});
 	},
 };

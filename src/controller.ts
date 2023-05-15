@@ -12,6 +12,8 @@ import {PluginView} from './view';
 interface Config {
 	value: Value<File | null>;
 	viewProps: ViewProps;
+
+	lineCount: number
 }
 
 // Custom controller class should implement `Controller` interface
@@ -38,6 +40,7 @@ export class PluginController implements Controller<PluginView> {
 		this.view = new PluginView(doc, {
 			value: this.value,
 			viewProps: this.viewProps,
+			lineCount: config.lineCount,
 		});
 
 		// You can use `PointerHandler` to handle pointer events in the same way as Tweakpane do
