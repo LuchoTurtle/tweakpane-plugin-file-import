@@ -10,7 +10,7 @@ import {
 import {PluginController} from './controller';
 
 export interface PluginInputParams extends BaseInputParams {
-	view: 'dots';
+	view: 'file-input';
 	lineCount?: number
 }
 
@@ -26,7 +26,7 @@ export const TemplateInputPlugin: InputBindingPlugin<
 	number,
 	PluginInputParams
 > = {
-	id: 'dots',
+	id: 'file-input',
 
 	// type: The plugin type.
 	// - 'input': Input binding
@@ -47,7 +47,7 @@ export const TemplateInputPlugin: InputBindingPlugin<
 		const p = ParamsParsers;
 		const result = parseParams<PluginInputParams>(params, {
 			// `view` option may be useful to provide a custom control for primitive values
-			view: p.required.constant('dots'),
+			view: p.required.constant('file-input'),
 
 			lineCount: p.optional.number,
 			//min: p.optional.number,

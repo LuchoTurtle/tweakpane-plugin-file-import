@@ -67,7 +67,7 @@ const params = {
 
 // TODO: Update parameters for your plugin
 pane.addInput(params, 'test', {
-  view: 'dots',
+  view: 'file-input',
 }).on('change', (ev) => {
   console.log(ev.value);
 });
