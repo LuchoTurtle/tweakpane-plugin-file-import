@@ -1,8 +1,8 @@
 // Import core styles
 @import '../../node_modules/@tweakpane/core/lib/sass/plugin';
 
-// Additional style for the plugin
-.#{$prefix}-tmpv {
+// Styles for the container
+.#{$prefix}-ctnv {
 	// Extend a general input view style
 	@extend %input;
 
@@ -82,4 +82,10 @@
 		left: 5px;
 		bottom: 3px;
 	}
+}
+
+// Styles for the button
+.#{$prefix}-btnv_b {
+	
+	margin-top: 10px;
 }

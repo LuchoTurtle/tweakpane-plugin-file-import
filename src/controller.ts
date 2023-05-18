@@ -24,7 +24,8 @@ export class PluginController implements Controller<PluginView> {
 	public readonly viewProps: ViewProps;
 
 	constructor(doc: Document, config: Config) {
-		this.onClick_ = this.onClick_.bind(this);
+		this.onContainerClick_ = this.onContainerClick_.bind(this);
+		this.onButtonClick_ = this.onButtonClick_.bind(this);
 
 		// Receive the bound value from the plugin
 		this.value = config.value;
@@ -44,17 +45,20 @@ export class PluginController implements Controller<PluginView> {
 		});
 
 		// You can use `PointerHandler` to handle pointer events in the same way as Tweakpane do
-		const ptHandler = new PointerHandler(this.view.element);
-		ptHandler.emitter.on('down', this.onClick_);
+		const containerPtHandler = new PointerHandler(this.view.container);
+		containerPtHandler.emitter.on('down', this.onContainerClick_);
+
+		const buttonPtHandler = new PointerHandler(this.view.button);
+		buttonPtHandler.emitter.on('down', this.onButtonClick_);
 	}
 
-	private onClick_(ev: PointerHandlerEvent) {
-
+	private onContainerClick_(ev: PointerHandlerEvent) {
 		// Creates hidden `input` and mimicks click to open file explorer
 		const input = document.createElement('input');
 		input.setAttribute('type', 'file');
 		input.style.opacity = '0';
 		input.style.position = 'fixed';
+		input.style.pointerEvents = 'none';
 		document.body.appendChild(input);
 
 		// Adds event listener when user chooses file
@@ -63,10 +67,18 @@ export class PluginController implements Controller<PluginView> {
 				let file = input.files[0];
 				this.value.rawValue = file;
 			}
-			document.body.removeChild(input);                
 		}, { once: true })
 
-		// Click hidden input to open file explorer
+		// Click hidden input to open file explorer and remove it
 		input.click();
+		document.body.removeChild(input);                
+	}
+
+	private onButtonClick_(ev: PointerHandlerEvent) {
+		var file = this.value.rawValue;
+
+		if(file) {
+			this.value.setRawValue(null);
+		}
 	}
 }

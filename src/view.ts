@@ -9,35 +9,49 @@ interface Config {
 
 // Create a class name generator from the view name
 // ClassName('tmp') will generate a CSS class name like `tp-tmpv`
-const className = ClassName('tmp');
+const containerClassName = ClassName('ctn');
+const buttonClassname = ClassName('btn');
 
 // Custom view class should implement `View` interface
 export class PluginView implements View {
+
+	// Root element
 	public readonly element: HTMLElement;
 
-	private doc_: Document;
+	// Root element's children
+	public readonly container: HTMLElement
+	public readonly button: HTMLElement;
+
+	// Container element's children
 	private fileIconEl_: HTMLElement;
 	private textEl_: HTMLElement;
 
+	// Value of the controller
 	private value_: Value<File | null>;
-
 
 	constructor(doc: Document, config: Config) {
 		// DOM --------------------------
-		// Create a root element for the plugin
-		this.doc_ = doc;
-
 		this.element = doc.createElement('div');
-		this.element.style.height = `calc(var(--bld-us) * ${config.lineCount})`;
-		this.element.classList.add(className());
 
-		// Create child elements
+		// Create container and children
+		this.container = doc.createElement('div');
+		this.container.style.height = `calc(var(--bld-us) * ${config.lineCount})`;
+		this.container.classList.add(containerClassName());
+		this.element.appendChild(this.container);
+
 		this.fileIconEl_ = doc.createElement('div');
-		this.fileIconEl_.classList.add(className('icon'));
-		this.element.appendChild(this.fileIconEl_);
+		this.fileIconEl_.classList.add(containerClassName('icon'));
+		this.container.appendChild(this.fileIconEl_);
 
 		this.textEl_ = doc.createElement('div');
-		this.textEl_.classList.add(className('text'));
+		this.textEl_.classList.add(containerClassName('text'));
+
+		// Create button
+		this.button = doc.createElement('button');
+		this.button.classList.add(buttonClassname('b'));
+		this.button.innerHTML = 'Delete';
+		this.button.style.display = 'none';
+		this.element.appendChild(this.button);
 
 		// Events ------------------------
 		// Receive the bound value from the controller
@@ -63,8 +77,21 @@ export class PluginView implements View {
 			this.textEl_.textContent = fileObj.name;
 
 			// Removing icon and adding text
-			this.element.appendChild(this.textEl_);
-			this.element.removeChild(this.fileIconEl_)
+			this.container.appendChild(this.textEl_);
+			this.container.removeChild(this.fileIconEl_)
+
+			// Adding button to delete
+			this.button.style.display = 'block';
+		} else {
+
+			// Setting the text of the file to the element
+			this.textEl_.textContent = "";
+
+			// Removing text and adding icon
+			this.container.appendChild(this.fileIconEl_);
+			this.container.removeChild(this.textEl_)
+
+			this.button.style.display = 'none';
 		}
 	}
 }
