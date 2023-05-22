@@ -9,7 +9,7 @@
 	<script src="../dist/tweakpane-plugin-template.js"></script>
 	<script>
 		const params = {
-			prop: "",
+			file: "",
 		};
 		const pane = new Tweakpane.Pane();
 
@@ -17,7 +17,7 @@
 		pane.registerPlugin(TweakpaneTemplatePlugin);
 
 		// TODO: Update parameters for your plugin
-		pane.addInput(params, 'prop', {
+		pane.addInput(params, 'file', {
 			view: 'file-input',
 			lineCount: 3
 		}).on('change', (ev) => {

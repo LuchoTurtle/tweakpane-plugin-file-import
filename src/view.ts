@@ -43,7 +43,7 @@ export class PluginView implements View {
 		this.fileIconEl_.classList.add(containerClassName('icon'));
 		this.container.appendChild(this.fileIconEl_);
 
-		this.textEl_ = doc.createElement('div');
+		this.textEl_ = doc.createElement('span');
 		this.textEl_.classList.add(containerClassName('text'));
 
 		// Create button
@@ -69,6 +69,7 @@ export class PluginView implements View {
 		});
 	}
 
+	/// This function is called every time the value (bound to the controller) changes (e.g. when the file is selected)
 	private onValueChange_() {
 		const fileObj = this.value_.rawValue;
 
@@ -78,7 +79,9 @@ export class PluginView implements View {
 
 			// Removing icon and adding text
 			this.container.appendChild(this.textEl_);
-			this.container.removeChild(this.fileIconEl_)
+			if(this.container.contains(this.fileIconEl_)) {
+				this.container.removeChild(this.fileIconEl_)
+			}
 
 			// Adding button to delete
 			this.button.style.display = 'block';
