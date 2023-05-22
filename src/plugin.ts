@@ -23,7 +23,7 @@ export interface PluginInputParams extends BaseInputParams {
 //
 export const TemplateInputPlugin: InputBindingPlugin<
 	File | null,
-	number,
+	string,
 	PluginInputParams
 > = {
 	id: 'file-input',
@@ -38,7 +38,7 @@ export const TemplateInputPlugin: InputBindingPlugin<
 	css: '__css__',
 
 	accept(exValue: unknown, params: Record<string, unknown>) {
-		if (typeof exValue !== 'number') {
+		if (typeof exValue !== 'string') {
 			// Return null to deny the user input
 			return null;
 		}
