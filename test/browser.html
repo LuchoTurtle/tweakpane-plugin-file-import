@@ -19,7 +19,8 @@
 		// TODO: Update parameters for your plugin
 		pane.addInput(params, 'file', {
 			view: 'file-input',
-			lineCount: 3
+			lineCount: 3,
+			filetypes: ['.png', '.jpg'],
 		}).on('change', (ev) => {
 			//console.log(ev.value);
 		});

@@ -13,12 +13,14 @@ interface Config {
 	value: Value<File | null>;
 	viewProps: ViewProps;
 
-	lineCount: number
+	lineCount: number,
+	filetypes?: string[],
 }
 
 // Custom controller class should implement `Controller` interface
 export class PluginController implements Controller<PluginView> {
 	public readonly value: Value<File | null>;
+	private readonly filetypes?: string[];
 
 	public readonly view: PluginView;
 	public readonly viewProps: ViewProps;
@@ -44,6 +46,9 @@ export class PluginController implements Controller<PluginView> {
 			lineCount: config.lineCount,
 		});
 
+		// Get filetypes
+		this.filetypes = config.filetypes
+
 		// You can use `PointerHandler` to handle pointer events in the same way as Tweakpane do
 		const containerPtHandler = new PointerHandler(this.view.container);
 		containerPtHandler.emitter.on('down', this.onContainerClick_);
@@ -53,6 +58,9 @@ export class PluginController implements Controller<PluginView> {
 	}
 
 	private onContainerClick_(ev: PointerHandlerEvent) {
+		// Accepted filetypes
+		const filetypes = this.filetypes;
+
 		// Creates hidden `input` and mimicks click to open file explorer
 		const input = document.createElement('input');
 		input.setAttribute('type', 'file');
@@ -63,9 +71,19 @@ export class PluginController implements Controller<PluginView> {
 
 		// Adds event listener when user chooses file
 		input.addEventListener('input', (ev) => {
+			
+
+			// Check if user has chosen a file
 			if(input.files && input.files.length > 0) {
-				let file = input.files[0];
-				this.value.rawValue = file;
+				const file = input.files[0];
+				const fileExtension = "." + file.name.split('.').pop()?.toLowerCase();
+
+				// Check if filetype is allowed
+				if((filetypes && filetypes.length > 0 && !filetypes.includes(fileExtension)) && fileExtension ) {
+					return;
+				} else {
+					this.value.rawValue = file;
+				}
 			}
 		}, { once: true })
 

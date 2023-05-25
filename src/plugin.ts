@@ -12,6 +12,7 @@ import {PluginController} from './controller';
 export interface PluginInputParams extends BaseInputParams {
 	view: 'file-input';
 	lineCount?: number
+	filetypes?: string[]
 }
 
 // NOTE: You can see JSDoc comments of `InputBindingPlugin` for details about each property
@@ -50,8 +51,7 @@ export const TemplateInputPlugin: InputBindingPlugin<
 			view: p.required.constant('file-input'),
 
 			lineCount: p.optional.number,
-			//min: p.optional.number,
-			//step: p.optional.number,
+			filetypes: p.optional.array(p.required.string)
 		});
 		if (!result) {
 			return null;
@@ -99,12 +99,16 @@ export const TemplateInputPlugin: InputBindingPlugin<
 	},
 
 	controller(args) {
+
+		const defaultNumberOfLines = 3;
+
 		// Create a controller for the plugin
 		return new PluginController(args.document, {
 			value: args.value,
 			viewProps: args.viewProps,
 
-			lineCount: args.params.lineCount ?? 3
+			lineCount: args.params.lineCount ?? defaultNumberOfLines,
+			filetypes: args.params.filetypes
 		});
 	},
 };
