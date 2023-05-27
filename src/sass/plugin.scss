@@ -13,6 +13,10 @@
 	overflow: hidden;
 	position: relative;
 
+	border: 1px dashed #bbb;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+
 	&.#{$prefix}-v-disabled {
 		opacity: 0.5;
 	}
