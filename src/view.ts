@@ -90,9 +90,9 @@ export class PluginView implements View {
 				if (ev.dataTransfer.files) {
 					
 					// We only change the value if the user has dropped a single file
-					const filesArray = [...[ev.dataTransfer.files]]
+					const filesArray = [ev.dataTransfer.files][0]
 					if(filesArray.length == 1) {
-						const file = filesArray[0].item(0);
+						const file = filesArray.item(0);
 						this.value_.setRawValue(file);
 					}
 				}
@@ -117,6 +117,7 @@ export class PluginView implements View {
 
 			// Adding button to delete
 			this.button.style.display = 'block';
+			this.container.style.border = 'unset';
 		} else {
 			// Setting the text of the file to the element
 			this.textEl_.textContent = '';
@@ -126,6 +127,7 @@ export class PluginView implements View {
 			this.container.removeChild(this.textEl_);
 
 			this.button.style.display = 'none';
+			this.container.style.border = '1px dashed #717070';
 		}
 	}
 }
