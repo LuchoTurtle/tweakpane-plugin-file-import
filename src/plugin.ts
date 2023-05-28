@@ -11,8 +11,8 @@ import {FilePluginController} from './controller';
 
 export interface PluginInputParams extends BaseInputParams {
 	view: 'file-input';
-	lineCount?: number
-	filetypes?: string[]
+	lineCount?: number;
+	filetypes?: string[];
 }
 
 export const FileInputPlugin: InputBindingPlugin<
@@ -42,7 +42,7 @@ export const FileInputPlugin: InputBindingPlugin<
 			view: p.required.constant('file-input'),
 
 			lineCount: p.optional.number,
-			filetypes: p.optional.array(p.required.string)
+			filetypes: p.optional.array(p.required.string),
 		});
 		if (!result) {
 			return null;
@@ -63,7 +63,7 @@ export const FileInputPlugin: InputBindingPlugin<
 			};
 		},
 
-		constraint(args) {
+		constraint(_args) {
 			return new CompositeConstraint([]);
 		},
 
@@ -85,7 +85,7 @@ export const FileInputPlugin: InputBindingPlugin<
 			viewProps: args.viewProps,
 
 			lineCount: args.params.lineCount ?? defaultNumberOfLines,
-			filetypes: args.params.filetypes
+			filetypes: args.params.filetypes,
 		});
 	},
 };

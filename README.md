@@ -1,12 +1,13 @@
 # Tweakpane plugin template
+
 Plugin template of an input binding for [Tweakpane][tweakpane].
 
-
 # For plugin developers
+
 TODO: Delete this section before publishing your plugin.
 
-
 ## Quick start
+
 - Install dependencies:
   ```
   % npm install
@@ -17,8 +18,8 @@ TODO: Delete this section before publishing your plugin.
   ```
 - Open `test/browser.html` to see the result.
 
-
 ## File structure
+
 ```
 |- src
 |  |- sass ............ Plugin CSS
@@ -31,25 +32,23 @@ TODO: Delete this section before publishing your plugin.
    `- browser.html .... Plugin labo
 ```
 
-
 # For plugin users
-
 
 ## Installation
 
-
 ### Browser
+
 ```html
 <script src="tweakpane.min.js"></script>
 <script src="tweakpane-plugin-template.min.js"></script>
 <script>
-  const pane = new Tweakpane.Pane();
-  pane.registerPlugin(TweakpaneTemplatePlugin);
+	const pane = new Tweakpane.Pane();
+	pane.registerPlugin(TweakpaneTemplatePlugin);
 </script>
 ```
 
-
 ### Package
+
 ```js
 import {Pane} from 'tweakpane';
 import * as TemplatePlugin from 'tweakpane-plugin-template';
@@ -58,20 +57,21 @@ const pane = new Pane();
 pane.registerPlugin(TemplatePlugin);
 ```
 
-
 ## Usage
+
 ```js
 const params = {
-  test: 3,
+	test: 3,
 };
 
 // TODO: Update parameters for your plugin
-pane.addInput(params, 'test', {
-  view: 'file-input',
-}).on('change', (ev) => {
-  console.log(ev.value);
-});
+pane
+	.addInput(params, 'test', {
+		view: 'file-input',
+	})
+	.on('change', (ev) => {
+		console.log(ev.value);
+	});
 ```
-
 
 [tweakpane]: https://github.com/cocopon/tweakpane/

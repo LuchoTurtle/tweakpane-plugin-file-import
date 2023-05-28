@@ -1,5 +1,4 @@
 import {
-	constrainRange,
 	Controller,
 	PointerHandler,
 	PointerHandlerEvent,
@@ -62,7 +61,7 @@ export class FilePluginController implements Controller<FilePluginView> {
 	 * If the file is valid, the `rawValue` of the controller is set.
 	 * @param ev Pointer event.
 	 */
-	private onContainerClick_(ev: PointerHandlerEvent) {
+	private onContainerClick_(_ev: PointerHandlerEvent) {
 		// Accepted filetypes
 		const filetypes = this.filetypes;
 
@@ -77,7 +76,7 @@ export class FilePluginController implements Controller<FilePluginView> {
 		// Adds event listener when user chooses file
 		input.addEventListener(
 			'input',
-			(ev) => {
+			(_ev) => {
 				// Check if user has chosen a file
 				if (input.files && input.files.length > 0) {
 					const file = input.files[0];
@@ -109,8 +108,8 @@ export class FilePluginController implements Controller<FilePluginView> {
 	 * It resets the `rawValue` of the controller.
 	 * @param ev Pointer event.
 	 */
-	private onButtonClick_(ev: PointerHandlerEvent) {
-		var file = this.value.rawValue;
+	private onButtonClick_(_ev: PointerHandlerEvent) {
+		const file = this.value.rawValue;
 
 		if (file) {
 			this.value.setRawValue(null);

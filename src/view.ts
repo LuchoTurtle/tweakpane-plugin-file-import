@@ -1,4 +1,4 @@
-import {ClassName, mapRange, Value, View, ViewProps} from '@tweakpane/core';
+import {ClassName, Value, View, ViewProps} from '@tweakpane/core';
 
 interface Config {
 	value: Value<File | null>;
