@@ -7,7 +7,7 @@ import {
 	parseParams,
 } from '@tweakpane/core';
 
-import {FilePluginController} from './controller';
+import {FilePluginController} from './controller/controller';
 
 export interface PluginInputParams extends BaseInputParams {
 	view: 'file-input';
