@@ -82,7 +82,7 @@ export class PluginController implements Controller<PluginView> {
 				if((filetypes && filetypes.length > 0 && !filetypes.includes(fileExtension)) && fileExtension ) {
 					return;
 				} else {
-					this.value.rawValue = file;
+					this.value.setRawValue(file);
 				}
 			}
 		}, { once: true })
