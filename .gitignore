@@ -121,4 +121,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Testing coverage folder
+.nyc_output
 
