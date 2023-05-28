@@ -7,7 +7,7 @@ import {
 	parseParams,
 } from '@tweakpane/core';
 
-import {PluginController} from './controller';
+import {FilePluginController} from './controller';
 
 export interface PluginInputParams extends BaseInputParams {
 	view: 'file-input';
@@ -15,14 +15,7 @@ export interface PluginInputParams extends BaseInputParams {
 	filetypes?: string[]
 }
 
-// NOTE: You can see JSDoc comments of `InputBindingPlugin` for details about each property
-//
-// `InputBindingPlugin<In, Ex, P>` means...
-// - The plugin receives the bound value as `Ex`,
-// - converts `Ex` into `In` and holds it
-// - P is the type of the parsed parameters
-//
-export const TemplateInputPlugin: InputBindingPlugin<
+export const FileInputPlugin: InputBindingPlugin<
 	File | null,
 	string,
 	PluginInputParams
@@ -30,8 +23,6 @@ export const TemplateInputPlugin: InputBindingPlugin<
 	id: 'file-input',
 
 	// type: The plugin type.
-	// - 'input': Input binding
-	// - 'monitor': Monitor binding
 	type: 'input',
 
 	// This plugin template injects a compiled CSS by @rollup/plugin-replace
@@ -73,19 +64,6 @@ export const TemplateInputPlugin: InputBindingPlugin<
 		},
 
 		constraint(args) {
-			// Create a value constraint from the user input
-			//const constraints = [];
-			//// You can reuse existing functions of the default plugins
-			//const cr = createRangeConstraint(args.params);
-			//if (cr) {
-			//	constraints.push(cr);
-			//}
-			//const cs = createStepConstraint(args.params);
-			//if (cs) {
-			//	constraints.push(cs);
-			//}
-			// Use `CompositeConstraint` to combine multiple constraints
-			//return new CompositeConstraint(constraints);
 			return new CompositeConstraint([]);
 		},
 
@@ -99,11 +77,10 @@ export const TemplateInputPlugin: InputBindingPlugin<
 	},
 
 	controller(args) {
-
 		const defaultNumberOfLines = 3;
 
 		// Create a controller for the plugin
-		return new PluginController(args.document, {
+		return new FilePluginController(args.document, {
 			value: args.value,
 			viewProps: args.viewProps,
 

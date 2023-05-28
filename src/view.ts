@@ -12,8 +12,7 @@ interface Config {
 const containerClassName = ClassName('ctn');
 const buttonClassName = ClassName('btn');
 
-// Custom view class should implement `View` interface
-export class PluginView implements View {
+export class FilePluginView implements View {
 	// Root element
 	public readonly element: HTMLElement;
 
@@ -29,6 +28,7 @@ export class PluginView implements View {
 	private value_: Value<File | null>;
 
 	constructor(doc: Document, config: Config) {
+		// Binding event handlers
 		this.onDrop_ = this.onDrop_.bind(this);
 
 		// DOM --------------------------
@@ -74,24 +74,30 @@ export class PluginView implements View {
 		});
 	}
 
-	// Stops file from bein gopened whenever the dragover event is occuring
+	/**
+	 * Called when a `dragover` event is created.
+	 * It simply prevents files being opened when these events are occuring.
+	 * @param ev Drag event object.
+	 */
 	onDragOver_(ev: DragEvent) {
 		ev.preventDefault();
 	}
 
-	// This function is called when a file is dropped within the drag and drop area.
+	/**
+	 * Called whenever a `drop` event is created.
+	 * It changes the `rawValue` of the controller with the file that was dropped.
+	 * @param ev Event object.
+	 */
 	onDrop_(ev: Event) {
 		if (ev instanceof DragEvent) {
-
 			// Prevent default behavior (Prevent file from being opened)
 			ev.preventDefault();
 
 			if (ev.dataTransfer) {
 				if (ev.dataTransfer.files) {
-					
 					// We only change the value if the user has dropped a single file
-					const filesArray = [ev.dataTransfer.files][0]
-					if(filesArray.length == 1) {
+					const filesArray = [ev.dataTransfer.files][0];
+					if (filesArray.length == 1) {
 						const file = filesArray.item(0);
 						this.value_.setRawValue(file);
 					}
@@ -100,8 +106,9 @@ export class PluginView implements View {
 		}
 	}
 
-
-	// This function is called every time the value (bound to the controller) changes (e.g. when the file is selected)
+	/**
+	 * Called when the value (bound to the controller) changes (e.g. when the file is selected).
+	 */
 	private onValueChange_() {
 		const fileObj = this.value_.rawValue;
 
