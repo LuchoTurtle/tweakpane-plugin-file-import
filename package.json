@@ -1,10 +1,10 @@
 {
-	"name": "tweakpane-plugin-template",
-	"version": "0.0.0",
-	"description": "Plugin template for Tweakpane",
-	"main": "dist/tweakpane-plugin-template.js",
+	"name": "tweakpane-plugin-file-import",
+	"version": "0.1.0",
+	"description": "A general-purpose and simple file input Tweakpane plugin",
+	"main": "dist/tweakpane-plugin-file-import.js",
 	"types": "dist/types/index.d.ts",
-	"author": "cocopon",
+	"author": "LuchoTurtle",
 	"license": "MIT",
 	"files": [
 		"dist"

@@ -1,77 +1,51 @@
-# Tweakpane plugin template
+# `tweakpane-plugin-file-import`
 
-Plugin template of an input binding for [Tweakpane][tweakpane].
+A Tweakpane plugin for importing files.
 
-# For plugin developers
+<p align="center">
+  <img src="https://github.com/tweakpane/plugin-essentials/assets/17494745/218288c9-2cd9-4713-91b5-a0549be6f0ed" />
+</p>
 
-TODO: Delete this section before publishing your plugin.
 
-## Quick start
+# Installation
 
-- Install dependencies:
-  ```
-  % npm install
-  ```
-- Build source codes and watch changes:
-  ```
-  % npm start
-  ```
-- Open `test/browser.html` to see the result.
-
-## File structure
-
-```
-|- src
-|  |- sass ............ Plugin CSS
-|  |- index.ts ........ Entrypoint
-|  |- plugin.ts ....... Plugin
-|  |- controller.ts ... Controller for the custom view
-|  `- view.ts ......... Custom view
-|- dist ............... Compiled files
-`- test
-   `- browser.html .... Plugin labo
-```
-
-# For plugin users
-
-## Installation
-
-### Browser
+## Browser
 
 ```html
 <script src="tweakpane.min.js"></script>
-<script src="tweakpane-plugin-template.min.js"></script>
+<script src="tweakpane-plugin-file-import.min.js"></script>
 <script>
 	const pane = new Tweakpane.Pane();
 	pane.registerPlugin(TweakpaneTemplatePlugin);
 </script>
 ```
 
-### Package
+## Package
 
 ```js
 import {Pane} from 'tweakpane';
-import * as TemplatePlugin from 'tweakpane-plugin-template';
+import * as FileImportPlugin from 'tweakpane-plugin-file-import';
 
 const pane = new Pane();
-pane.registerPlugin(TemplatePlugin);
+pane.registerPlugin(FileImportPlugin);
 ```
 
 ## Usage
 
 ```js
 const params = {
-	test: 3,
+	file: '',
 };
 
-// TODO: Update parameters for your plugin
 pane
-	.addInput(params, 'test', {
+	.addInput(params, 'file', {
 		view: 'file-input',
+		lineCount: 3,
+		filetypes: ['.png', '.jpg'],
 	})
 	.on('change', (ev) => {
 		console.log(ev.value);
 	});
+
 ```
 
-[tweakpane]: https://github.com/cocopon/tweakpane/

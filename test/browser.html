@@ -6,7 +6,7 @@
 	</head>
 	<body>
 		<script src="../node_modules/tweakpane/dist/tweakpane.js"></script>
-		<script src="../dist/tweakpane-plugin-template.js"></script>
+		<script src="../dist/tweakpane-plugin-file-import.js"></script>
 		<script>
 			const params = {
 				file: '',
@@ -16,7 +16,6 @@
 			// Register plugin
 			pane.registerPlugin(TweakpaneTemplatePlugin);
 
-			// TODO: Update parameters for your plugin
 			pane
 				.addInput(params, 'file', {
 					view: 'file-input',
