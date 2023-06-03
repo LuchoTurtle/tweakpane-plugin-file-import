@@ -23,7 +23,7 @@ and add it as a `<script>` tag on your HTML page.
 <script src="./tweakpane-plugin-file-import.min.js"></script>
 <script>
 	const pane = new Tweakpane.Pane();
-	pane.registerPlugin(TweakpaneTemplatePlugin);
+	pane.registerPlugin(FileInputPlugin);
 </script>
 ```
 
