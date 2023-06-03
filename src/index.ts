@@ -1,4 +1,4 @@
-import {FileInputPlugin} from './plugin';
+import {TweakpaneFileInputPlugin} from './plugin';
 
 // Export your plugin(s) as constant `plugins`
-export const plugins = [FileInputPlugin];
+export const plugins = [TweakpaneFileInputPlugin];

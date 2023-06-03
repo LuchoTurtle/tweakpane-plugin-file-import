@@ -15,7 +15,7 @@ export interface PluginInputParams extends BaseInputParams {
 	filetypes?: string[];
 }
 
-export const FileInputPlugin: InputBindingPlugin<
+export const TweakpaneFileInputPlugin: InputBindingPlugin<
 	File | null,
 	string,
 	PluginInputParams
