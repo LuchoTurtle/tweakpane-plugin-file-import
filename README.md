@@ -1,6 +1,6 @@
 # `tweakpane-plugin-file-import`
 
-[![npm](https://img.shields.io/npm/v/tweakpane-plugin-file-import?color=red&logo=npm)](https://www.npmjs.com/package/luchoturtle/tweakpane-plugin-file-import)
+[![npm](https://img.shields.io/npm/v/tweakpane-plugin-file-import?color=red&logo=npm)](https://www.npmjs.com/package/tweakpane-plugin-file-import)
 
 A Tweakpane plugin for importing files.
 
