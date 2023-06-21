@@ -2,7 +2,7 @@
 	"name": "tweakpane-plugin-file-import",
 	"version": "0.1.2",
 	"description": "A general-purpose and simple file input Tweakpane plugin",
-	"homepage": "http://lisperator.net/uglifyjs",
+	"homepage": "https://github.com/LuchoTurtle/tweakpane-plugin-file-import",
 	"main": "dist/tweakpane-plugin-file-import.js",
 	"types": "dist/types/index.d.ts",
 	"author": "LuchoTurtle",
