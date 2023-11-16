@@ -59,7 +59,7 @@
 		"nyc": "^15.1.0",
 		"onchange": "^7.1.0",
 		"postcss": "^8.2.6",
-		"prettier": "2.8.8",
+		"prettier": "3.1.0",
 		"release-it": "^15.10.5",
 		"rimraf": "^3.0.2",
 		"rollup": "^2.39.1",
