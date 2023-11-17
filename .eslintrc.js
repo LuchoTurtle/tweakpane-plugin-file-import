@@ -13,7 +13,12 @@ module.exports = {
 		'no-unused-vars': 'off',
 		'sort-imports': 'off',
 
-		'prettier/prettier': 'error',
+		'prettier/prettier': [
+			'error',
+			{
+				endOfLine: 'auto',
+			},
+		],
 		'simple-import-sort/imports': 'error',
 		'@typescript-eslint/naming-convention': [
 			'error',
