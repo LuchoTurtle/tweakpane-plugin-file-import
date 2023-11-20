@@ -38,7 +38,7 @@
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
 		"@rollup/plugin-alias": "^5.0.1",
-		"@rollup/plugin-node-resolve": "^13.0.0",
+		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-replace": "^2.4.1",
 		"@rollup/plugin-typescript": "^8.2.0",
 		"@tweakpane/core": "^1.1.4",
