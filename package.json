@@ -60,7 +60,7 @@
 		"onchange": "^7.1.0",
 		"postcss": "^8.2.6",
 		"prettier": "3.1.0",
-		"release-it": "^15.10.5",
+		"release-it": "^17.0.0",
 		"rimraf": "^3.0.2",
 		"rollup": "^2.39.1",
 		"rollup-plugin-cleanup": "^3.2.1",
