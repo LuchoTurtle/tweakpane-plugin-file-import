@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/tweakpane-plugin-file-import?color=red&logo=npm)](https://www.npmjs.com/package/tweakpane-plugin-file-import)
 
-A Tweakpane plugin for importing files.
+A Tweakpane plugin for importing any file.
 
 <p align="center">
   <img src="https://github.com/tweakpane/plugin-essentials/assets/17494745/218288c9-2cd9-4713-91b5-a0549be6f0ed" />
@@ -94,6 +94,7 @@ npm watch
 ```
 
 After this, simply open `test/browser.html` to see the results.
+After uploading a file, check the console and you'll see the object being logged! 😄
 
 
 ### File structure
