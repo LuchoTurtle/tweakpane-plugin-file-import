@@ -2,12 +2,12 @@ import {
 	BaseInputParams,
 	BindingTarget,
 	CompositeConstraint,
+	createPlugin,
 	InputBindingPlugin,
-	ParamsParsers,
-	parseParams,
+	parseRecord,
 } from '@tweakpane/core';
 
-import {FilePluginController} from './controller/controller';
+import {FilePluginController} from './controller/controller.js';
 
 export interface PluginInputParams extends BaseInputParams {
 	view: 'file-input';
@@ -19,15 +19,11 @@ export const TweakpaneFileInputPlugin: InputBindingPlugin<
 	File | null,
 	string,
 	PluginInputParams
-> = {
+> = createPlugin({
 	id: 'file-input',
 
 	// type: The plugin type.
 	type: 'input',
-
-	// This plugin template injects a compiled CSS by @rollup/plugin-replace
-	// See rollup.config.js for details
-	css: '__css__',
 
 	accept(exValue: unknown, params: Record<string, unknown>) {
 		if (typeof exValue !== 'string') {
@@ -36,14 +32,13 @@ export const TweakpaneFileInputPlugin: InputBindingPlugin<
 		}
 
 		// Parse parameters object
-		const p = ParamsParsers;
-		const result = parseParams<PluginInputParams>(params, {
+		const result = parseRecord<PluginInputParams>(params, (p) => ({
 			// `view` option may be useful to provide a custom control for primitive values
 			view: p.required.constant('file-input'),
 
 			lineCount: p.optional.number,
 			filetypes: p.optional.array(p.required.string),
-		});
+		}));
 		if (!result) {
 			return null;
 		}
@@ -88,4 +83,4 @@ export const TweakpaneFileInputPlugin: InputBindingPlugin<
 			filetypes: args.params.filetypes,
 		});
 	},
-};
+});

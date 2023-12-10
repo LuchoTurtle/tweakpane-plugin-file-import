@@ -1,10 +1,10 @@
 // Import core styles
-@import '../../node_modules/@tweakpane/core/lib/sass/plugin';
+@use '../../node_modules/@tweakpane/core/lib/sass/tp';
 
 // Styles for the container
 .#{$prefix}-ctnv {
 	// Extend a general input view style
-	@extend %input;
+	@extend %tp-input;
 
 	cursor: pointer;
 	display: flex;
@@ -17,7 +17,7 @@
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 
-	&.#{$prefix}-v-disabled {
+	&.#{tp.$disabled} {
 		opacity: 0.5;
 	}
 
@@ -99,6 +99,6 @@
 }
 
 // Styles for the button
-.#{$prefix}-btnv_b {
+.#{tp.$prefix}-btnv_b {
 	margin-top: 10px;
 }
