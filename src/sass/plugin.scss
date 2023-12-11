@@ -2,7 +2,7 @@
 @use '../../node_modules/@tweakpane/core/lib/sass/tp';
 
 // Styles for the container
-.#{$prefix}-ctnv {
+.#{tp.$prefix}-ctnv {
 	// Extend a general input view style
 	@extend %tp-input;
 
