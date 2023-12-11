@@ -11,15 +11,22 @@ A Tweakpane plugin for importing files.
 
 # Installation
 
-You need [Tweakpane](https://github.com/cocopon/tweakpane) to install this plugin.
+You need [Tweakpane `v4`](https://github.com/cocopon/tweakpane) to install this plugin.
 
 You may use https://unpkg.com/tweakpane-plugin-file-import to get the latest version
 and add it as a `<script>` tag on your HTML page.
 
+> [!WARNING]
+>
+> If you're using Tweakpane `v3`, 
+> **you can only use the `v0` of this package**.
+
+
 ## Browser
 
 ```html
-<script src="https://unpkg.com/tweakpane@3.0.5/dist/tweakpane.js"></script>
+<!-- You may use the latest 4.x version -->
+<script src="https://unpkg.com/tweakpane@4.0.1/dist/tweakpane.js"></script>
 <script src="./tweakpane-plugin-file-import.min.js"></script>
 <script>
 	const pane = new Tweakpane.Pane();
@@ -34,6 +41,13 @@ Alternatively, you can install with `npm`:
 ```sh
 npm i tweakpane-plugin-file-import
 ```
+
+> [!WARNING]
+>
+> If you're using Tweakpane `v3`, run:
+> ```sh
+> npm i tweakpane-plugin-file-import@0.1.4
+> ```
 
 And import it like so.
 
@@ -54,8 +68,20 @@ const params = {
 	file: '',
 };
 
+// If you're using Tweakpane v3 -------
 pane
 	.addInput(params, 'file', {
+		view: 'file-input',
+		lineCount: 3,
+		filetypes: ['.png', '.jpg'],
+	})
+	.on('change', (ev) => {
+		console.log(ev.value);
+	});
+
+// If you're using Tweakpane v4 -------
+pane
+	.addBinding(params, 'file', {
 		view: 'file-input',
 		lineCount: 3,
 		filetypes: ['.png', '.jpg'],
