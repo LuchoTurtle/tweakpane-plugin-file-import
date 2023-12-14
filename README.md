@@ -8,10 +8,18 @@ A Tweakpane plugin for importing files.
   <img src="https://github.com/tweakpane/plugin-essentials/assets/17494745/218288c9-2cd9-4713-91b5-a0549be6f0ed" />
 </p>
 
+> [!WARNING]
+>
+> This branch pertains the `v0` of this package.
+> This version is meant to add support to those that still use `Tweakpane v3`.
+> 
+> If you are using `Tweakpane v4` (which you should upgrade to), 
+> go ahead and check out the `main` branch
+> and install the latest version of this package.
 
 # Installation
 
-You need [Tweakpane](https://github.com/cocopon/tweakpane) to install this plugin.
+You need [Tweakpane v3](https://github.com/cocopon/tweakpane) to install this plugin.
 
 You may use https://unpkg.com/tweakpane-plugin-file-import to get the latest version
 and add it as a `<script>` tag on your HTML page.
