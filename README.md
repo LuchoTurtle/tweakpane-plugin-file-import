@@ -118,10 +118,10 @@ Install dependencies:
 npm install
 ```
 
-To build the source codes and watch changes, run:
+To build the source code and watch changes, run:
 
 ```sh
-npm watch
+npm start
 ```
 
 After this, simply open `test/browser.html` to see the results.
