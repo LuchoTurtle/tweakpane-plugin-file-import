@@ -1,6 +1,6 @@
 {
 	"name": "tweakpane-plugin-file-import",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A general-purpose and simple file input Tweakpane plugin",
 	"homepage": "https://github.com/LuchoTurtle/tweakpane-plugin-file-import",
 	"main": "dist/tweakpane-plugin-file-import.js",
@@ -62,8 +62,8 @@
 		"sass": "^1.49.9",
 		"tweakpane": "^4.0.0",
 		"typescript": "^4.9.5"
-	  },
-	  "peerDependencies": {
+	},
+	"peerDependencies": {
 		"tweakpane": "^4.0.0"
-	  }
+	}
 }
