@@ -21,22 +21,7 @@ and add it as a `<script>` tag on your HTML page.
 > If you're using Tweakpane `v3`, 
 > **you can only use the `v0` of this package**.
 
-
-## Browser
-
-```html
-<!-- You may use the latest 4.x version -->
-<script src="https://unpkg.com/tweakpane@4.0.1/dist/tweakpane.js"></script>
-<script src="./tweakpane-plugin-file-import.min.js"></script>
-<script>
-	const pane = new Tweakpane.Pane();
-	pane.registerPlugin(TweakpaneFileImportPlugin);
-</script>
-```
-
-## Package
-
-Alternatively, you can install with `npm`:
+You can install with `npm`:
 
 ```sh
 npm i tweakpane-plugin-file-import
@@ -58,6 +43,11 @@ import * as TweakpaneFileImportPlugin from 'tweakpane-plugin-file-import';
 const pane = new Pane();
 pane.registerPlugin(TweakpaneFileImportPlugin);
 ```
+
+> [!TIP]
+>
+> Check [`test/browser.html`](/test/browser.html) for an example
+> of the plugin being used.
 
 ## Usage
 

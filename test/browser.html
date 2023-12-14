@@ -6,13 +6,13 @@
 	</head>
 	<body>
 		<script type="module">
-			import * as Tweakpane from '../node_modules/tweakpane/dist/tweakpane.js';
+			import {Pane} from '../node_modules/tweakpane/dist/tweakpane.js';
 			import * as TweakpaneFileImportPlugin from '../dist/tweakpane-plugin-file-import.js';
 
 			const params = {
 				file: '',
 			};
-			const pane = new Tweakpane.Pane();
+			const pane = new Pane();
 
 			// Register plugin
 			pane.registerPlugin(TweakpaneFileImportPlugin);
