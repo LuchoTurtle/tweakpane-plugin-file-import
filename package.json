@@ -15,6 +15,7 @@
 		"dist"
 	],
 	"scripts": {
+		"release": "release-it",
 		"prepare": "run-s clean build",
 		"prepublishOnly": "npm test",
 		"start": "run-p watch server",
@@ -53,6 +54,7 @@
 		"onchange": "^7.1.0",
 		"postcss": "^8.2.6",
 		"prettier": "^3.1.1",
+		"release-it": "^17.0.0",
 		"rimraf": "^3.0.2",
 		"rollup": "^2.39.1",
 		"rollup-plugin-cleanup": "^3.2.1",
