@@ -5,19 +5,20 @@
 		<title></title>
 	</head>
 	<body>
-		<script src="../node_modules/tweakpane/dist/tweakpane.js"></script>
-		<script src="../dist/tweakpane-plugin-file-import.js"></script>
-		<script>
+		<script type="module">
+			import {Pane} from '../node_modules/tweakpane/dist/tweakpane.js';
+			import * as TweakpaneFileImportPlugin from '../dist/tweakpane-plugin-file-import.js';
+
 			const params = {
 				file: '',
 			};
-			const pane = new Tweakpane.Pane();
+			const pane = new Pane();
 
 			// Register plugin
 			pane.registerPlugin(TweakpaneFileImportPlugin);
 
 			pane
-				.addInput(params, 'file', {
+				.addBinding(params, 'file', {
 					view: 'file-input',
 					lineCount: 3,
 					filetypes: ['.png', '.jpg'],

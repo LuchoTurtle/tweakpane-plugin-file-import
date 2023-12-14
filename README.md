@@ -9,27 +9,41 @@ A Tweakpane plugin for importing files.
 </p>
 
 
+> [!WARNING]
+> 
+> The version `1.0.0` and upwards of this package
+> only supports `Tweakpane v4`.
+> 
+> If you are still using `Tweakpane v3`,
+> **you can only use the `v0` of this package**.
+> 
+> 
+> You can install it.
+> 
+> ```sh
+> npm i tweakpane-plugin-file-import@0.1.4
+> ```
+> 
+> And use it like so.
+> 
+> ```html
+> <script src="https://unpkg.com/tweakpane@3.0.5/dist/tweakpane.js"></script>
+> <script src="./tweakpane-plugin-file-import.min.js"></script>
+> <script>
+> 	const pane = new Tweakpane.Pane();
+> 	pane.registerPlugin(TweakpaneFileImportPlugin);
+> </script>
+> ```
+
+
 # Installation
 
-You need [Tweakpane](https://github.com/cocopon/tweakpane) to install this plugin.
+You need [Tweakpane `v4`](https://github.com/cocopon/tweakpane) to install this plugin.
 
 You may use https://unpkg.com/tweakpane-plugin-file-import to get the latest version
 and add it as a `<script>` tag on your HTML page.
 
-## Browser
-
-```html
-<script src="https://unpkg.com/tweakpane@3.0.5/dist/tweakpane.js"></script>
-<script src="./tweakpane-plugin-file-import.min.js"></script>
-<script>
-	const pane = new Tweakpane.Pane();
-	pane.registerPlugin(TweakpaneFileImportPlugin);
-</script>
-```
-
-## Package
-
-Alternatively, you can install with `npm`:
+You can install with `npm`:
 
 ```sh
 npm i tweakpane-plugin-file-import
@@ -45,6 +59,11 @@ const pane = new Pane();
 pane.registerPlugin(TweakpaneFileImportPlugin);
 ```
 
+> [!TIP]
+>
+> Check [`test/browser.html`](/test/browser.html) for an example
+> of the plugin being used.
+
 ## Usage
 
 Simply initialize the params with an empty string and pass the optional parameters.
@@ -54,8 +73,20 @@ const params = {
 	file: '',
 };
 
+// If you're using Tweakpane v3 -------
 pane
 	.addInput(params, 'file', {
+		view: 'file-input',
+		lineCount: 3,
+		filetypes: ['.png', '.jpg'],
+	})
+	.on('change', (ev) => {
+		console.log(ev.value);
+	});
+
+// If you're using Tweakpane v4 -------
+pane
+	.addBinding(params, 'file', {
 		view: 'file-input',
 		lineCount: 3,
 		filetypes: ['.png', '.jpg'],
@@ -77,9 +108,14 @@ pane
 
 ## Contributing
 
-If you want to contribute to this package, you are free to open a pull request.
+If you want to contribute to this package, you are free to open a pull request. 😊
 
 ### Quickstart
+
+> [!NOTE]
+>
+> You'll need to have `Node 16` or upwards installed
+> in order to properly install and run `package.json` script commands.
 
 Install dependencies:
 
@@ -87,10 +123,10 @@ Install dependencies:
 npm install
 ```
 
-To build the source codes and watch changes, run:
+To build the source code and watch changes, run:
 
 ```sh
-npm watch
+npm start
 ```
 
 After this, simply open `test/browser.html` to see the results.

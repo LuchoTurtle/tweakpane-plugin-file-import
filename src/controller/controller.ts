@@ -6,7 +6,7 @@ import {
 	ViewProps,
 } from '@tweakpane/core';
 
-import {FilePluginView} from '../view/view';
+import {FilePluginView} from '../view/view.js';
 
 interface Config {
 	value: Value<File | null>;

@@ -36,7 +36,7 @@ export class FilePluginView implements View {
 
 		// Create container and children
 		this.container = doc.createElement('div');
-		this.container.style.height = `calc(var(--bld-us) * ${config.lineCount})`;
+		this.container.style.height = `calc(20px * ${config.lineCount})`;
 		this.container.classList.add(containerClassName());
 		this.element.appendChild(this.container);
 
