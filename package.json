@@ -61,7 +61,7 @@
 		"rollup-plugin-terser": "^7.0.2",
 		"sass": "^1.49.9",
 		"tweakpane": "^4.0.0",
-		"typescript": "^4.9.5"
+		"typescript": "^5.3.3"
 	},
 	"peerDependencies": {
 		"tweakpane": "^4.0.0"
