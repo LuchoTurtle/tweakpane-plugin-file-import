@@ -5,6 +5,7 @@ interface Config {
 	viewProps: ViewProps;
 
 	lineCount: number;
+	filetypes?: string[];
 }
 
 // Create a class name generator from the view name
@@ -18,9 +19,10 @@ export class FilePluginView implements View {
 
 	// Root element's children
 	public readonly container: HTMLElement;
-	public readonly button: HTMLElement;
+	public readonly deleteButton: HTMLElement;
 
 	// Container element's children
+	private inputEl_: HTMLInputElement;
 	private fileIconEl_: HTMLElement;
 	private textEl_: HTMLElement;
 
@@ -35,9 +37,58 @@ export class FilePluginView implements View {
 		this.element = doc.createElement('div');
 
 		// Create container and children
+		this.inputEl_ = document.createElement('input');
+		this.inputEl_.id = 'file-input-el';
+		this.inputEl_.setAttribute('name', 'file');
+		this.inputEl_.setAttribute('type', 'file');
+		this.inputEl_.setAttribute(
+			'accept',
+			config.filetypes ? config.filetypes.join(',') : '*',
+		);
+		this.inputEl_.addEventListener('click', () => {});
+		this.inputEl_.addEventListener('touchstart', () => {});
+		this.inputEl_.addEventListener('touchend', () => {});
+		this.inputEl_.addEventListener('touchcancel', () => {});
+		this.inputEl_.addEventListener('touchmove', () => {});
+		this.inputEl_.addEventListener(
+			'input',
+			(_ev) => {
+
+				console.log(this.inputEl_.files)
+				
+				// Check if user has chosen a file
+				if (this.inputEl_.files && this.inputEl_.files.length > 0) {
+					const file = this.inputEl_ .files[0];
+					const fileExtension =
+						'.' + file.name.split('.').pop()?.toLowerCase();
+
+					// Check if filetype is allowed
+					if (
+						config.filetypes &&
+						config.filetypes.length > 0 &&
+						!config.filetypes.includes(fileExtension) &&
+						fileExtension
+					) {
+						return;
+					} else {
+						this.value_.setRawValue(file);
+					}
+				}
+			},
+			{once: true},
+		);
+		this.inputEl_ .style.cursor = 'pointer';
+		this.inputEl_ .style.opacity = '100';
+		this.inputEl_ .style.width = '100%';
+		this.inputEl_ .style.height = '100%';
+		this.inputEl_ .style.position = 'absolute';
+
 		this.container = doc.createElement('div');
 		this.container.style.height = `calc(20px * ${config.lineCount})`;
+		this.container.style.cursor = 'pointer';
 		this.container.classList.add(containerClassName());
+		this.container.appendChild(this.inputEl_ );
+
 		this.element.appendChild(this.container);
 
 		this.fileIconEl_ = doc.createElement('div');
@@ -47,12 +98,12 @@ export class FilePluginView implements View {
 		this.textEl_ = doc.createElement('span');
 		this.textEl_.classList.add(containerClassName('text'));
 
-		// Create button
-		this.button = doc.createElement('button');
-		this.button.classList.add(buttonClassName('b'));
-		this.button.innerHTML = 'Delete';
-		this.button.style.display = 'none';
-		this.element.appendChild(this.button);
+		// Create delete button
+		this.deleteButton = doc.createElement('button');
+		this.deleteButton.classList.add(buttonClassName('b'));
+		this.deleteButton.innerHTML = 'Delete';
+		this.deleteButton.style.display = 'none';
+		this.element.appendChild(this.deleteButton);
 
 		// Add drag and drop event handlers
 		this.element.addEventListener('drop', this.onDrop_);
@@ -112,6 +163,7 @@ export class FilePluginView implements View {
 	private onValueChange_() {
 		const fileObj = this.value_.rawValue;
 
+		// If there's a file selected, we show its contents
 		if (fileObj) {
 			// Setting the text of the file to the element
 			this.textEl_.textContent = fileObj.name;
@@ -123,17 +175,24 @@ export class FilePluginView implements View {
 			}
 
 			// Adding button to delete
-			this.button.style.display = 'block';
+			this.deleteButton.style.display = 'block';
 			this.container.style.border = 'unset';
-		} else {
+		} 
+		
+		// Otherwise, we reset the input
+		else {
 			// Setting the text of the file to the element
 			this.textEl_.textContent = '';
+
+			// Resetting input value
+			this.inputEl_.value = '';
+			this.value_.setRawValue(null); // TODO move things to controller
 
 			// Removing text and adding icon
 			this.container.appendChild(this.fileIconEl_);
 			this.container.removeChild(this.textEl_);
 
-			this.button.style.display = 'none';
+			this.deleteButton.style.display = 'none';
 			this.container.style.border = '1px dashed #717070';
 		}
 	}

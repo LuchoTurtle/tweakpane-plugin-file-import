@@ -25,8 +25,8 @@ export class FilePluginController implements Controller<FilePluginView> {
 
 	constructor(doc: Document, config: Config) {
 		// Binding click event handlers
-		this.onContainerClick_ = this.onContainerClick_.bind(this);
-		this.onButtonClick_ = this.onButtonClick_.bind(this);
+		this.onInputClick = this.onInputClick.bind(this);
+		this.onDeleteButtonClick_ = this.onDeleteButtonClick_.bind(this);
 
 		// Receive the bound value from the plugin
 		this.value = config.value;
@@ -45,14 +45,15 @@ export class FilePluginController implements Controller<FilePluginView> {
 			value: this.value,
 			viewProps: this.viewProps,
 			lineCount: config.lineCount,
+			filetypes: config.filetypes
 		});
 
 		// You can use `PointerHandler` to handle pointer events in the same way as Tweakpane do
 		const containerPtHandler = new PointerHandler(this.view.container);
-		containerPtHandler.emitter.on('down', this.onContainerClick_);
+		containerPtHandler.emitter.on('down', this.onInputClick);
 
-		const buttonPtHandler = new PointerHandler(this.view.button);
-		buttonPtHandler.emitter.on('down', this.onButtonClick_);
+		const deleteButtonPTHandler = new PointerHandler(this.view.deleteButton);
+		deleteButtonPTHandler.emitter.on('down', this.onDeleteButtonClick_);
 	}
 
 	/**
@@ -61,46 +62,8 @@ export class FilePluginController implements Controller<FilePluginView> {
 	 * If the file is valid, the `rawValue` of the controller is set.
 	 * @param ev Pointer event.
 	 */
-	private onContainerClick_(_ev: PointerHandlerEvent) {
-		// Accepted filetypes
-		const filetypes = this.filetypes;
+	private onInputClick(_ev?: PointerHandlerEvent) {
 
-		// Creates hidden `input` and mimicks click to open file explorer
-		const input = document.createElement('input');
-		input.setAttribute('type', 'file');
-		input.style.opacity = '0';
-		input.style.position = 'fixed';
-		input.style.pointerEvents = 'none';
-		document.body.appendChild(input);
-
-		// Adds event listener when user chooses file
-		input.addEventListener(
-			'input',
-			(_ev) => {
-				// Check if user has chosen a file
-				if (input.files && input.files.length > 0) {
-					const file = input.files[0];
-					const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
-
-					// Check if filetype is allowed
-					if (
-						filetypes &&
-						filetypes.length > 0 &&
-						!filetypes.includes(fileExtension) &&
-						fileExtension
-					) {
-						return;
-					} else {
-						this.value.setRawValue(file);
-					}
-				}
-			},
-			{once: true},
-		);
-
-		// Click hidden input to open file explorer and remove it
-		input.click();
-		document.body.removeChild(input);
 	}
 
 	/**
@@ -108,7 +71,7 @@ export class FilePluginController implements Controller<FilePluginView> {
 	 * It resets the `rawValue` of the controller.
 	 * @param ev Pointer event.
 	 */
-	private onButtonClick_(_ev: PointerHandlerEvent) {
+	private onDeleteButtonClick_(_ev: PointerHandlerEvent) {
 		const file = this.value.rawValue;
 
 		if (file) {
