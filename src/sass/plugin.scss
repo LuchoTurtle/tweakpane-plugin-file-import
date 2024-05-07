@@ -13,6 +13,9 @@
 	overflow: hidden;
 	position: relative;
 
+	height: 100%;
+	width: 100%;
+
 	border: 1px dashed #717070;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -101,4 +104,9 @@
 // Styles for the button
 .#{tp.$prefix}-btnv_b {
 	margin-top: 10px;
+}
+
+// Styles for the input
+.#{tp.$prefix}-inputv_b {
+	
 }
