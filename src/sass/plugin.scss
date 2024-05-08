@@ -24,6 +24,23 @@
 		opacity: 0.5;
 	}
 
+	&_warning {
+		color: tp.cssVar('input-fg');
+		bottom: 2px;
+		display: inline-block;
+		font-size: 0.9em;
+		height: max-content;
+		line-height: 0.9;
+		margin: 0.2rem;
+		opacity: 0.5;
+		white-space: normal;
+		width: max-content;
+		word-wrap: break-word;
+		text-align: right;
+		width: 100%;
+		margin-top: var(--cnt-vp);
+	}
+
 	&_text {
 		// You can use CSS variables for styling. See declarations for details:
 		// ../../node_modules/@tweakpane/core/lib/sass/common/_defs.scss

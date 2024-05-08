@@ -56,6 +56,9 @@ export class FilePluginController implements Controller<FilePluginView> {
 			this.view.element.removeEventListener('dragleave', this.onDragLeave);
 		});
 
+		//TODO drag and drop
+		//TODO customize warning message
+
 		this.value.emitter.on('change', () => this.handleValueChange());
 	}
 
@@ -75,6 +78,8 @@ export class FilePluginController implements Controller<FilePluginView> {
 				!filetypes.includes(fileExtension) &&
 				fileExtension
 			) {
+				this.view.warning.style.display = 'block';
+				this.view.warning.innerHTML = "Unaccepted file type.";
 				return;
 			} else {
 				this.value.setRawValue(file);
@@ -86,8 +91,15 @@ export class FilePluginController implements Controller<FilePluginView> {
 		const file = this.value.rawValue;
 
 		if (file) {
+			// Resetting the value
 			this.value.setRawValue(null);
+
+			// Resetting the input
 			this.view.input.value = '';
+
+			// Resetting the warning text
+			this.view.warning.innerHTML = '';
+			this.view.warning.style.display = 'none';
 		}
 	}
 
@@ -124,6 +136,10 @@ export class FilePluginController implements Controller<FilePluginView> {
 			if (containerEl.contains(fileIconEl)) {
 				containerEl.removeChild(fileIconEl);
 			}
+			
+			// Resetting warning text 
+			this.view.warning.innerHTML = '';
+			this.view.warning.style.display = 'none';
 
 			// Adding button to delete
 			deleteButton.style.display = 'block';
@@ -136,6 +152,11 @@ export class FilePluginController implements Controller<FilePluginView> {
 			containerEl.appendChild(fileIconEl);
 			containerEl.removeChild(textEl);
 
+			// Resetting warning text 
+			this.view.warning.innerHTML = '';
+			this.view.warning.style.display = 'none';
+
+			// Hiding button and resetting border
 			deleteButton.style.display = 'none';
 			containerEl.style.border = '1px dashed #717070';
 		}

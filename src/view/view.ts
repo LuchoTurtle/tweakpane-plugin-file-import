@@ -21,7 +21,8 @@ export class FilePluginView implements View {
 	public readonly container: HTMLElement;
 
 	public input: HTMLInputElement;
-	public text: HTMLElement;
+	public text: HTMLSpanElement;
+	public warning: HTMLSpanElement;
 	public fileIcon: HTMLElement;
 	public deleteButton: HTMLButtonElement;
 
@@ -54,6 +55,11 @@ export class FilePluginView implements View {
 		this.text = doc.createElement('span');
 		this.text.classList.add(containerClassName('text'));
 
+		// Warning text
+		this.warning = doc.createElement('span');
+		this.warning.classList.add(containerClassName('warning'));
+		this.warning.style.display = 'none';
+
 		// Delete button
 		this.deleteButton = doc.createElement('button');
 		this.deleteButton.classList.add(deleteButtonClassName('b'));
@@ -63,6 +69,7 @@ export class FilePluginView implements View {
 		this.container.appendChild(this.input);
 		this.container.appendChild(this.fileIcon);
 		this.element.appendChild(this.container)
+		this.element.appendChild(this.warning);
 		this.element.appendChild(this.deleteButton)
 	}
 
