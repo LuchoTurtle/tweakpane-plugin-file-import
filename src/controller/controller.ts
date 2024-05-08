@@ -36,28 +36,22 @@ export class FilePluginController implements Controller<FilePluginView> {
 
 		this.onFile = this.onFile.bind(this);
 		this.onDrop = this.onDrop.bind(this);
-		this.onDragStart = this.onDragStart.bind(this);
 		this.onDragOver = this.onDragOver.bind(this);
 		this.onDragLeave = this.onDragLeave.bind(this);
 		this.onDeleteClick = this.onDeleteClick.bind(this);
 
 		this.view.input.addEventListener('change', this.onFile);
 		this.view.element.addEventListener('drop', this.onDrop);
-		this.view.element.addEventListener('dragstart', this.onDragStart);
 		this.view.element.addEventListener('dragover', this.onDragOver);
 		this.view.element.addEventListener('dragleave', this.onDragLeave);
-		this.view.deleteButton.addEventListener('click', this.onDeleteClick)
+		this.view.deleteButton.addEventListener('click', this.onDeleteClick);
 
 		this.viewProps.handleDispose(() => {
 			this.view.input.removeEventListener('change', this.onFile);
 			this.view.element.removeEventListener('drop', this.onDrop);
-			this.view.element.removeEventListener('dragstart', this.onDragStart);
 			this.view.element.removeEventListener('dragover', this.onDragOver);
 			this.view.element.removeEventListener('dragleave', this.onDragLeave);
 		});
-
-		//TODO drag and drop
-		//TODO customize warning message
 
 		this.value.emitter.on('change', () => this.handleValueChange());
 	}
@@ -69,22 +63,33 @@ export class FilePluginController implements Controller<FilePluginView> {
 		// Check if user has chosen a file
 		if (input.files && input.files.length > 0) {
 			const file = input.files[0];
-			const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
-
-			// Check if filetype is allowed
-			if (
-				filetypes &&
-				filetypes.length > 0 &&
-				!filetypes.includes(fileExtension) &&
-				fileExtension
-			) {
-				this.view.warning.style.display = 'block';
-				this.view.warning.innerHTML = "Unaccepted file type.";
-				return;
+			if (!this.isFileValid(file)) {
+				this.showWarning();
 			} else {
 				this.value.setRawValue(file);
 			}
 		}
+	}
+
+	private showWarning() {
+		this.view.warning.style.display = 'block';
+		this.view.warning.innerHTML = 'Unaccepted file type.';
+		setTimeout(() => {
+			// Resetting warning text
+			this.view.warning.innerHTML = '';
+			this.view.warning.style.display = 'none';
+		}, 5000);
+	}
+
+	private isFileValid(file: File): boolean {
+		const filetypes = this.config.filetypes;
+		const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
+		return !(
+			filetypes &&
+			filetypes.length > 0 &&
+			!filetypes.includes(fileExtension) &&
+			fileExtension
+		);
 	}
 
 	private onDeleteClick() {
@@ -103,25 +108,43 @@ export class FilePluginController implements Controller<FilePluginView> {
 		}
 	}
 
-	private onDragStart(event: DragEvent) {}
-
 	private onDragOver(event: Event) {
 		event.preventDefault();
-		//this.view.changeDraggingState(true);
+		this.view.changeDraggingState(true);
 	}
 
 	private onDragLeave() {
-		//this.view.changeDraggingState(false);
+		this.view.changeDraggingState(false);
 	}
 
-	private onDrop(event: DragEvent) {
-		
-	}
+	private onDrop(ev: DragEvent) {
+		if (ev instanceof DragEvent) {
+			// Prevent default behavior (Prevent file from being opened)
+			ev.preventDefault();
 
+			if (ev.dataTransfer) {
+				if (ev.dataTransfer.files) {
+					// We only change the value if the user has dropped a single file
+					const filesArray = [ev.dataTransfer.files][0];
+					if (filesArray.length == 1) {
+						const file = filesArray.item(0);
+						if (file) {
+							if (!this.isFileValid(file)) {
+								this.showWarning();
+							} else {
+								this.value.setRawValue(file);
+							}
+						}
+					}
+				}
+			}
+		}
+		this.view.changeDraggingState(false);
+	}
 
 	private handleValueChange() {
 		const fileObj = this.value.rawValue;
-		
+
 		let containerEl = this.view.container;
 		let textEl = this.view.text;
 		let fileIconEl = this.view.fileIcon;
@@ -136,8 +159,8 @@ export class FilePluginController implements Controller<FilePluginView> {
 			if (containerEl.contains(fileIconEl)) {
 				containerEl.removeChild(fileIconEl);
 			}
-			
-			// Resetting warning text 
+
+			// Resetting warning text
 			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 
@@ -152,7 +175,7 @@ export class FilePluginController implements Controller<FilePluginView> {
 			containerEl.appendChild(fileIconEl);
 			containerEl.removeChild(textEl);
 
-			// Resetting warning text 
+			// Resetting warning text
 			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 

@@ -24,6 +24,11 @@
 		opacity: 0.5;
 	}
 
+	&_input_area_dragging {
+		border: 1px dashed rgb(103 116 255);
+		background-color: #5858b93b;
+	}
+
 	&_warning {
 		color: tp.cssVar('input-fg');
 		bottom: 2px;
@@ -118,12 +123,13 @@
 	}
 }
 
+
 // Styles for the button
 .#{tp.$prefix}-btnv_b {
 	margin-top: 10px;
 }
 
 // Styles for the input
-.#{tp.$prefix}-inputv_i {
+.#{tp.$prefix}-inputv {
 	opacity: 0;
 }

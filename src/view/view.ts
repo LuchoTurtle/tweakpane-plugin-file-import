@@ -15,7 +15,6 @@ const inputClassName = ClassName('input');
 const deleteButtonClassName = ClassName('btn');
 
 export class FilePluginView implements View {
-
 	public readonly element: HTMLElement;
 
 	public readonly container: HTMLElement;
@@ -27,8 +26,7 @@ export class FilePluginView implements View {
 	public deleteButton: HTMLButtonElement;
 
 	constructor(doc: Document, config: Config) {
-
-		// Root 
+		// Root
 		this.element = doc.createElement('div');
 
 		// Container
@@ -38,7 +36,7 @@ export class FilePluginView implements View {
 
 		// File input field
 		this.input = doc.createElement('input');
-		this.input.classList.add(inputClassName("i"));
+		this.input.classList.add(inputClassName());
 		this.input.setAttribute('type', 'file');
 		this.input.setAttribute(
 			'accept',
@@ -46,12 +44,11 @@ export class FilePluginView implements View {
 		);
 		this.input.style.height = `calc(20px * ${config.lineCount})`;
 
-
 		// Icon
 		this.fileIcon = doc.createElement('div');
 		this.fileIcon.classList.add(containerClassName('icon'));
 
-		// Text 
+		// Text
 		this.text = doc.createElement('span');
 		this.text.classList.add(containerClassName('text'));
 
@@ -65,12 +62,22 @@ export class FilePluginView implements View {
 		this.deleteButton.classList.add(deleteButtonClassName('b'));
 		this.deleteButton.innerHTML = 'Delete';
 		this.deleteButton.style.display = 'none';
-		
+
 		this.container.appendChild(this.input);
 		this.container.appendChild(this.fileIcon);
-		this.element.appendChild(this.container)
+		this.element.appendChild(this.container);
 		this.element.appendChild(this.warning);
-		this.element.appendChild(this.deleteButton)
+		this.element.appendChild(this.deleteButton);
 	}
 
+	changeDraggingState(state: boolean) {
+		if (state) {
+			this.container?.classList.add(
+				containerClassName('input_area_dragging'));
+		} else {
+			this.container?.classList.remove(
+				containerClassName('input_area_dragging'),
+			);
+		}
+	}
 }
