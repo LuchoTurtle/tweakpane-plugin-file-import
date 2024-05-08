@@ -60,7 +60,7 @@
 	// https://css.gg/software-upload
 	&_icon {
 		box-sizing: border-box;
-		position: relative;
+		position: absolute;
 		display: block;
 		transform: scale(var(--ggs, 1));
 		width: 16px;
@@ -107,6 +107,6 @@
 }
 
 // Styles for the input
-.#{tp.$prefix}-inputv_b {
-	
+.#{tp.$prefix}-inputv_i {
+	opacity: 0;
 }

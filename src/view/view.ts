@@ -6,25 +6,38 @@ interface Config {
 
 	lineCount: number;
 	filetypes?: string[];
-	clickCallback?: (event: MouseEvent, input: HTMLInputElement) => void;
 }
 
 // Create a class name generator from the view name
 // ClassName('tmp') will generate a CSS class name like `tp-tmpv`
-const inputClassName = ClassName('ctn');
-const buttonClassName = ClassName('btn');
+const containerClassName = ClassName('ctn');
+const inputClassName = ClassName('input');
+const deleteButtonClassName = ClassName('btn');
 
 export class FilePluginView implements View {
+
 	public readonly element: HTMLElement;
-	public readonly input: HTMLInputElement;
+
+	public readonly container: HTMLElement;
+
+	public input: HTMLInputElement;
+	public text: HTMLElement;
+	public fileIcon: HTMLElement;
+	public deleteButton: HTMLButtonElement;
 
 	constructor(doc: Document, config: Config) {
 
+		// Root 
 		this.element = doc.createElement('div');
-		this.element.classList.add(inputClassName());
-		config.viewProps.bindClassModifiers(this.element);
 
+		// Container
+		this.container = doc.createElement('div');
+		this.container.classList.add(containerClassName());
+		config.viewProps.bindClassModifiers(this.container);
+
+		// File input field
 		this.input = doc.createElement('input');
+		this.input.classList.add(inputClassName("i"));
 		this.input.setAttribute('type', 'file');
 		this.input.setAttribute(
 			'accept',
@@ -32,16 +45,25 @@ export class FilePluginView implements View {
 		);
 		this.input.style.height = `calc(20px * ${config.lineCount})`;
 
+
+		// Icon
+		this.fileIcon = doc.createElement('div');
+		this.fileIcon.classList.add(containerClassName('icon'));
+
+		// Text 
+		this.text = doc.createElement('span');
+		this.text.classList.add(containerClassName('text'));
+
+		// Delete button
+		this.deleteButton = doc.createElement('button');
+		this.deleteButton.classList.add(deleteButtonClassName('b'));
+		this.deleteButton.innerHTML = 'Delete';
+		this.deleteButton.style.display = 'none';
 		
-		this.element.appendChild(this.input);
+		this.container.appendChild(this.input);
+		this.container.appendChild(this.fileIcon);
+		this.element.appendChild(this.container)
+		this.element.appendChild(this.deleteButton)
 	}
 
-	changeDraggingState(state: boolean) {
-		const el = this.element;
-		if (state) {
-			el?.classList.add(inputClassName('area_dragging'));
-		} else {
-			el?.classList.remove(inputClassName('area_dragging'));
-		}
-	}
 }
