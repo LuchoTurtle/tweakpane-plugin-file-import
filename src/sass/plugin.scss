@@ -13,12 +13,37 @@
 	overflow: hidden;
 	position: relative;
 
+	height: 100%;
+	width: 100%;
+
 	border: 1px dashed #717070;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 
 	&.#{$prefix}-v-disabled {
 		opacity: 0.5;
+	}
+
+	&_input_area_dragging {
+		border: 1px dashed rgb(103 116 255);
+		background-color: #5858b93b;
+	}
+
+	&_warning {
+		color: var(--in-fg);
+		bottom: 2px;
+		display: inline-block;
+		font-size: 0.9em;
+		height: max-content;
+		line-height: 0.9;
+		margin: 0.2rem;
+		opacity: 0.5;
+		white-space: normal;
+		width: max-content;
+		word-wrap: break-word;
+		text-align: right;
+		width: 100%;
+		margin-top: var(--cnt-vp);
 	}
 
 	&_text {
@@ -57,7 +82,7 @@
 	// https://css.gg/software-upload
 	&_icon {
 		box-sizing: border-box;
-		position: relative;
+		position: absolute;
 		display: block;
 		transform: scale(var(--ggs, 1));
 		width: 16px;
@@ -101,4 +126,9 @@
 // Styles for the button
 .#{$prefix}-btnv_b {
 	margin-top: 10px;
+}
+
+// Styles for the input
+.#{$prefix}-inputv {
+	opacity: 0;
 }

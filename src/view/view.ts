@@ -5,136 +5,82 @@ interface Config {
 	viewProps: ViewProps;
 
 	lineCount: number;
+	filetypes?: string[];
 }
 
 // Create a class name generator from the view name
 // ClassName('tmp') will generate a CSS class name like `tp-tmpv`
 const containerClassName = ClassName('ctn');
-const buttonClassName = ClassName('btn');
+const inputClassName = ClassName('input');
+const deleteButtonClassName = ClassName('btn');
 
 export class FilePluginView implements View {
-	// Root element
 	public readonly element: HTMLElement;
 
-	// Root element's children
 	public readonly container: HTMLElement;
-	public readonly button: HTMLElement;
 
-	// Container element's children
-	private fileIconEl_: HTMLElement;
-	private textEl_: HTMLElement;
-
-	// Value of the controller
-	private value_: Value<File | null>;
+	public input: HTMLInputElement;
+	public text: HTMLSpanElement;
+	public warning: HTMLSpanElement;
+	public fileIcon: HTMLElement;
+	public deleteButton: HTMLButtonElement;
 
 	constructor(doc: Document, config: Config) {
-		// Binding event handlers
-		this.onDrop_ = this.onDrop_.bind(this);
-
-		// DOM --------------------------
+		// Root
 		this.element = doc.createElement('div');
 
-		// Create container and children
+		// Container
 		this.container = doc.createElement('div');
-		this.container.style.height = `calc(var(--bld-us) * ${config.lineCount})`;
 		this.container.classList.add(containerClassName());
+		config.viewProps.bindClassModifiers(this.container);
+
+		// File input field
+		this.input = doc.createElement('input');
+		this.input.classList.add(inputClassName());
+		this.input.setAttribute('type', 'file');
+		this.input.setAttribute(
+			'accept',
+			config.filetypes ? config.filetypes.join(',') : '*',
+		);
+		this.input.style.height = `calc(20px * ${config.lineCount})`;
+
+		// Icon
+		this.fileIcon = doc.createElement('div');
+		this.fileIcon.classList.add(containerClassName('icon'));
+
+		// Text
+		this.text = doc.createElement('span');
+		this.text.classList.add(containerClassName('text'));
+
+		// Warning text
+		this.warning = doc.createElement('span');
+		this.warning.classList.add(containerClassName('warning'));
+		this.warning.style.display = 'none';
+
+		// Delete button
+		this.deleteButton = doc.createElement('button');
+		this.deleteButton.classList.add(deleteButtonClassName('b'));
+		this.deleteButton.innerHTML = 'Delete';
+		this.deleteButton.style.display = 'none';
+
+		this.container.appendChild(this.input);
+		this.container.appendChild(this.fileIcon);
 		this.element.appendChild(this.container);
-
-		this.fileIconEl_ = doc.createElement('div');
-		this.fileIconEl_.classList.add(containerClassName('icon'));
-		this.container.appendChild(this.fileIconEl_);
-
-		this.textEl_ = doc.createElement('span');
-		this.textEl_.classList.add(containerClassName('text'));
-
-		// Create button
-		this.button = doc.createElement('button');
-		this.button.classList.add(buttonClassName('b'));
-		this.button.innerHTML = 'Delete';
-		this.button.style.display = 'none';
-		this.element.appendChild(this.button);
-
-		// Add drag and drop event handlers
-		this.element.addEventListener('drop', this.onDrop_);
-		this.element.addEventListener('dragover', this.onDragOver_);
-
-		// Events ------------------------
-		// Receive the bound value from the controller
-		this.value_ = config.value;
-		// Handle 'change' event of the value
-		this.value_.emitter.on('change', this.onValueChange_.bind(this));
-
-		// Bind view props to the element
-		config.viewProps.bindClassModifiers(this.element);
-
-		// View dispose handler
-		config.viewProps.handleDispose(() => {
-			// Called when the view is disposing
-			console.log('TODO: dispose view');
-		});
+		this.element.appendChild(this.warning);
+		this.element.appendChild(this.deleteButton);
 	}
 
 	/**
-	 * Called when a `dragover` event is created.
-	 * It simply prevents files being opened when these events are occuring.
-	 * @param ev Drag event object.
+	 * Changes the style of the container based on whether the user is dragging or not.
+	 * @param state if the user is dragging or not.
 	 */
-	onDragOver_(ev: DragEvent) {
-		ev.preventDefault();
-	}
-
-	/**
-	 * Called whenever a `drop` event is created.
-	 * It changes the `rawValue` of the controller with the file that was dropped.
-	 * @param ev Event object.
-	 */
-	onDrop_(ev: Event) {
-		if (ev instanceof DragEvent) {
-			// Prevent default behavior (Prevent file from being opened)
-			ev.preventDefault();
-
-			if (ev.dataTransfer) {
-				if (ev.dataTransfer.files) {
-					// We only change the value if the user has dropped a single file
-					const filesArray = [ev.dataTransfer.files][0];
-					if (filesArray.length == 1) {
-						const file = filesArray.item(0);
-						this.value_.setRawValue(file);
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Called when the value (bound to the controller) changes (e.g. when the file is selected).
-	 */
-	private onValueChange_() {
-		const fileObj = this.value_.rawValue;
-
-		if (fileObj) {
-			// Setting the text of the file to the element
-			this.textEl_.textContent = fileObj.name;
-
-			// Removing icon and adding text
-			this.container.appendChild(this.textEl_);
-			if (this.container.contains(this.fileIconEl_)) {
-				this.container.removeChild(this.fileIconEl_);
-			}
-
-			// Adding button to delete
-			this.button.style.display = 'block';
-			this.container.style.border = 'unset';
+	changeDraggingState(state: boolean) {
+		if (state) {
+			this.container?.classList.add(containerClassName('input_area_dragging'));
 		} else {
-			// Setting the text of the file to the element
-			this.textEl_.textContent = '';
-
-			// Removing text and adding icon
-			this.container.appendChild(this.fileIconEl_);
-			this.container.removeChild(this.textEl_);
-
-			this.button.style.display = 'none';
-			this.container.style.border = '1px dashed #717070';
+			this.container?.classList.remove(
+				containerClassName('input_area_dragging'),
+			);
 		}
 	}
 }
