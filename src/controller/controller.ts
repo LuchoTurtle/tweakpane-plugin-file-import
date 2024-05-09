@@ -1,8 +1,4 @@
-import {
-	Controller,
-	Value,
-	ViewProps,
-} from '@tweakpane/core';
+import {Controller, Value, ViewProps} from '@tweakpane/core';
 
 import {FilePluginView} from '../view/view.js';
 
@@ -62,7 +58,7 @@ export class FilePluginController implements Controller<FilePluginView> {
 	 * Called when the value of the input changes.
 	 * @param event change event.
 	 */
-	private onFile(event: Event): void {
+	private onFile(_event: Event): void {
 		const input = this.view.input;
 
 		// Check if user has chosen a file.
@@ -180,10 +176,10 @@ export class FilePluginController implements Controller<FilePluginView> {
 	private handleValueChange() {
 		const fileObj = this.value.rawValue;
 
-		let containerEl = this.view.container;
-		let textEl = this.view.text;
-		let fileIconEl = this.view.fileIcon;
-		let deleteButton = this.view.deleteButton;
+		const containerEl = this.view.container;
+		const textEl = this.view.text;
+		const fileIconEl = this.view.fileIcon;
+		const deleteButton = this.view.deleteButton;
 
 		if (fileObj) {
 			// Setting the text of the file to the element

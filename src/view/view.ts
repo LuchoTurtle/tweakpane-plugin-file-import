@@ -76,8 +76,7 @@ export class FilePluginView implements View {
 	 */
 	changeDraggingState(state: boolean) {
 		if (state) {
-			this.container?.classList.add(
-				containerClassName('input_area_dragging'));
+			this.container?.classList.add(containerClassName('input_area_dragging'));
 		} else {
 			this.container?.classList.remove(
 				containerClassName('input_area_dragging'),
