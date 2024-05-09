@@ -1,7 +1,5 @@
 import {
 	Controller,
-	PointerHandler,
-	PointerHandlerEvent,
 	Value,
 	ViewProps,
 } from '@tweakpane/core';
@@ -18,6 +16,7 @@ interface Config {
 
 export class FilePluginController implements Controller<FilePluginView> {
 	public readonly value: Value<File | null>;
+
 	public readonly view: FilePluginView;
 	public readonly viewProps: ViewProps;
 
@@ -34,6 +33,7 @@ export class FilePluginController implements Controller<FilePluginView> {
 		});
 		this.config = config;
 
+		// Bind event handlers
 		this.onFile = this.onFile.bind(this);
 		this.onDrop = this.onDrop.bind(this);
 		this.onDragOver = this.onDragOver.bind(this);
@@ -46,21 +46,27 @@ export class FilePluginController implements Controller<FilePluginView> {
 		this.view.element.addEventListener('dragleave', this.onDragLeave);
 		this.view.deleteButton.addEventListener('click', this.onDeleteClick);
 
+		this.value.emitter.on('change', () => this.handleValueChange());
+
+		// Dispose event handlers
 		this.viewProps.handleDispose(() => {
 			this.view.input.removeEventListener('change', this.onFile);
 			this.view.element.removeEventListener('drop', this.onDrop);
 			this.view.element.removeEventListener('dragover', this.onDragOver);
 			this.view.element.removeEventListener('dragleave', this.onDragLeave);
+			this.view.deleteButton.removeEventListener('click', this.onDeleteClick);
 		});
-
-		this.value.emitter.on('change', () => this.handleValueChange());
 	}
 
+	/**
+	 * Called when the value of the input changes.
+	 * @param event change event.
+	 */
 	private onFile(event: Event): void {
 		const input = this.view.input;
-		const filetypes = this.config.filetypes;
 
-		// Check if user has chosen a file
+		// Check if user has chosen a file.
+		// If it's valid, we update the value. Otherwise, show warning.
 		if (input.files && input.files.length > 0) {
 			const file = input.files[0];
 			if (!this.isFileValid(file)) {
@@ -71,6 +77,9 @@ export class FilePluginController implements Controller<FilePluginView> {
 		}
 	}
 
+	/**
+	 * Shows warning text for 5 seconds.
+	 */
 	private showWarning() {
 		this.view.warning.style.display = 'block';
 		this.view.warning.innerHTML = 'Unaccepted file type.';
@@ -81,6 +90,11 @@ export class FilePluginController implements Controller<FilePluginView> {
 		}, 5000);
 	}
 
+	/**
+	 * Checks if the file is valid with the given filetypes.
+	 * @param file File object
+	 * @returns true if the file is valid.
+	 */
 	private isFileValid(file: File): boolean {
 		const filetypes = this.config.filetypes;
 		const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
@@ -92,6 +106,10 @@ export class FilePluginController implements Controller<FilePluginView> {
 		);
 	}
 
+	/**
+	 * Event handler when the delete HTML button is clicked.
+	 * It resets the `rawValue` of the controller.
+	 */
 	private onDeleteClick() {
 		const file = this.value.rawValue;
 
@@ -108,15 +126,29 @@ export class FilePluginController implements Controller<FilePluginView> {
 		}
 	}
 
+	/**
+	 * Called when the user drags over a file.
+	 * Updates the style of the container.
+	 * @param event drag event.
+	 */
 	private onDragOver(event: Event) {
 		event.preventDefault();
 		this.view.changeDraggingState(true);
 	}
 
+	/**
+	 * Called when the user leaves the container while dragging.
+	 * Updates the style of the container.
+	 */
 	private onDragLeave() {
 		this.view.changeDraggingState(false);
 	}
 
+	/**
+	 * Called when the user drops a file in the container.
+	 * Either shows a warning if it's invalid or updates the value if it's valid.
+	 * @param ev drag event.
+	 */
 	private onDrop(ev: DragEvent) {
 		if (ev instanceof DragEvent) {
 			// Prevent default behavior (Prevent file from being opened)
@@ -142,6 +174,9 @@ export class FilePluginController implements Controller<FilePluginView> {
 		this.view.changeDraggingState(false);
 	}
 
+	/**
+	 * Called when the value (bound to the controller) changes (e.g. when the file is selected).
+	 */
 	private handleValueChange() {
 		const fileObj = this.value.rawValue;
 

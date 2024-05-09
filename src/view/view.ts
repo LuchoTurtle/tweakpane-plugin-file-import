@@ -70,6 +70,10 @@ export class FilePluginView implements View {
 		this.element.appendChild(this.deleteButton);
 	}
 
+	/**
+	 * Changes the style of the container based on whether the user is dragging or not.
+	 * @param state if the user is dragging or not.
+	 */
 	changeDraggingState(state: boolean) {
 		if (state) {
 			this.container?.classList.add(
