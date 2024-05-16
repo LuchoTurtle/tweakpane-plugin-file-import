@@ -1,6 +1,6 @@
 {
 	"name": "tweakpane-plugin-file-import",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": "A general-purpose and simple file input Tweakpane plugin",
 	"homepage": "https://github.com/LuchoTurtle/tweakpane-plugin-file-import",
 	"main": "dist/tweakpane-plugin-file-import.js",
@@ -15,9 +15,10 @@
 		"dist"
 	],
 	"scripts": {
+		"release": "release-it",
 		"prepare": "run-s clean build",
 		"prepublishOnly": "npm test",
-		"start": "npm run watch",
+		"start": "run-p watch server",
 		"test": "eslint --ext .ts \"src/**/*.ts\"",
 		"assets": "run-s clean build assets:version assets:zip",
 		"assets:version": "node scripts/assets-append-version.js",
@@ -27,10 +28,10 @@
 		"build:dev": "rollup --config rollup.config.js",
 		"build:dts": "tsc --project tsconfig-dts.json",
 		"build:prod": "rollup --config rollup.config.js --environment BUILD:production",
-		"release": "release-it",
 		"format": "run-p format:*",
 		"format:scss": "prettier --parser scss --write \"src/sass/**/*.scss\"",
 		"format:ts": "eslint --ext .ts --fix \"src/**/*.ts\"",
+		"server": "http-server -c-1 -o /test/browser.html",
 		"watch": "run-p watch:*",
 		"watch:sass": "onchange --initial --kill \"src/sass/**/*.scss\" -- npm run build:dev",
 		"watch:ts": "onchange --initial --kill \"src/**/*.ts\" -- rollup --config rollup.config.js"
@@ -51,6 +52,7 @@
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.1",
 		"eslint-plugin-simple-import-sort": "^10.0.0",
+		"http-server": "^14.1.1",
 		"install": "^0.13.0",
 		"jsdom": "^23.0.1",
 		"mocha": "^10.2.0",
