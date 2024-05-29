@@ -67,6 +67,7 @@ pane
 		view: 'file-input',
 		lineCount: 3,
 		filetypes: ['.png', '.jpg'],
+		invalidFiletypeMessage: "We can't accept those filetypes!"
 	})
 	.on('change', (ev) => {
 		console.log(ev.value);
@@ -80,6 +81,7 @@ pane
 |-----------|--------|--------------------------------|
 | lineCount | int    | Number of lines for the height of the container. Similar to [FPS graph ](https://github.com/tweakpane/plugin-essentials#fps-graph)          |
 | filetypes     | array | Array of valid file extensions.             |
+| invalidFiletypeMessage     | string | String shown when the user tries to upload an invalid filetype.             |
 
 
 
