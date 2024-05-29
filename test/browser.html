@@ -19,8 +19,9 @@
 			pane
 				.addInput(params, 'file', {
 					view: 'file-input',
+					invalidFiletypeMessage: "We can't accept those filetypes!",
 					lineCount: 3,
-					filetypes: ['.png', '.jpg'],
+					filetypes: ['.png', '.jpeg'],
 				})
 				.on('change', (ev) => {
 					console.log(ev.value);
