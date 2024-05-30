@@ -11,6 +11,7 @@ import {FilePluginController} from './controller/controller.js';
 
 export interface PluginInputParams extends BaseInputParams {
 	view: 'file-input';
+	invalidFiletypeMessage?: string;
 	lineCount?: number;
 	filetypes?: string[];
 }
@@ -36,6 +37,7 @@ export const TweakpaneFileInputPlugin: InputBindingPlugin<
 			// `view` option may be useful to provide a custom control for primitive values
 			view: p.required.constant('file-input'),
 
+			invalidFiletypeMessage: p.optional.string,
 			lineCount: p.optional.number,
 			filetypes: p.optional.array(p.required.string),
 		}));
@@ -73,12 +75,15 @@ export const TweakpaneFileInputPlugin: InputBindingPlugin<
 
 	controller(args) {
 		const defaultNumberOfLines = 3;
+		const defaultFiletypeWarningText = 'Unaccepted file type.';
 
 		// Create a controller for the plugin
 		return new FilePluginController(args.document, {
 			value: args.value,
 			viewProps: args.viewProps,
 
+			invalidFiletypeMessage:
+				args.params.invalidFiletypeMessage ?? defaultFiletypeWarningText,
 			lineCount: args.params.lineCount ?? defaultNumberOfLines,
 			filetypes: args.params.filetypes,
 		});

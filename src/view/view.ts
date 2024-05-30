@@ -4,6 +4,7 @@ interface Config {
 	value: Value<File | null>;
 	viewProps: ViewProps;
 
+	invalidFiletypeMessage: string;
 	lineCount: number;
 	filetypes?: string[];
 }
@@ -55,6 +56,7 @@ export class FilePluginView implements View {
 		// Warning text
 		this.warning = doc.createElement('span');
 		this.warning.classList.add(containerClassName('warning'));
+		this.warning.innerHTML = config.invalidFiletypeMessage;
 		this.warning.style.display = 'none';
 
 		// Delete button
