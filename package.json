@@ -1,6 +1,6 @@
 {
 	"name": "tweakpane-plugin-file-import",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "A general-purpose and simple file input Tweakpane plugin",
 	"homepage": "https://github.com/LuchoTurtle/tweakpane-plugin-file-import",
 	"main": "dist/tweakpane-plugin-file-import.js",
