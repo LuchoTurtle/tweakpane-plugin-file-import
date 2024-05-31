@@ -117,7 +117,6 @@ export class FilePluginController implements Controller<FilePluginView> {
 			this.view.input.value = '';
 
 			// Resetting the warning text
-			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 		}
 	}
@@ -192,7 +191,6 @@ export class FilePluginController implements Controller<FilePluginView> {
 			}
 
 			// Resetting warning text
-			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 
 			// Adding button to delete
@@ -207,7 +205,6 @@ export class FilePluginController implements Controller<FilePluginView> {
 			containerEl.removeChild(textEl);
 
 			// Resetting warning text
-			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 
 			// Hiding button and resetting border
