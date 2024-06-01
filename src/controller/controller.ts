@@ -6,6 +6,7 @@ interface Config {
 	value: Value<File | null>;
 	viewProps: ViewProps;
 
+	invalidFiletypeMessage: string;
 	lineCount: number;
 	filetypes?: string[];
 }
@@ -24,6 +25,7 @@ export class FilePluginController implements Controller<FilePluginView> {
 		this.view = new FilePluginView(doc, {
 			viewProps: this.viewProps,
 			value: config.value,
+			invalidFiletypeMessage: config.invalidFiletypeMessage,
 			lineCount: config.lineCount,
 			filetypes: config.filetypes,
 		});
@@ -78,10 +80,8 @@ export class FilePluginController implements Controller<FilePluginView> {
 	 */
 	private showWarning() {
 		this.view.warning.style.display = 'block';
-		this.view.warning.innerHTML = 'Unaccepted file type.';
 		setTimeout(() => {
 			// Resetting warning text
-			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 		}, 5000);
 	}
@@ -117,7 +117,6 @@ export class FilePluginController implements Controller<FilePluginView> {
 			this.view.input.value = '';
 
 			// Resetting the warning text
-			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 		}
 	}
@@ -192,7 +191,6 @@ export class FilePluginController implements Controller<FilePluginView> {
 			}
 
 			// Resetting warning text
-			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 
 			// Adding button to delete
@@ -207,7 +205,6 @@ export class FilePluginController implements Controller<FilePluginView> {
 			containerEl.removeChild(textEl);
 
 			// Resetting warning text
-			this.view.warning.innerHTML = '';
 			this.view.warning.style.display = 'none';
 
 			// Hiding button and resetting border
