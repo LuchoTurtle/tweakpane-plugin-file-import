@@ -130,6 +130,7 @@ npm install
 To build the source code and watch changes, run:
 
 ```sh
+npm run build:dev
 npm start
 ```
 
