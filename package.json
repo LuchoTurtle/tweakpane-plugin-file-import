@@ -37,7 +37,7 @@
 		"watch:ts": "onchange --initial --kill \"src/**/*.ts\" -- rollup --config rollup.config.js"
 	},
 	"devDependencies": {
-		"@rollup/plugin-alias": "^5.1.0",
+		"@rollup/plugin-alias": "^6.0.0",
 		"@rollup/plugin-node-resolve": "^16.0.0",
 		"@rollup/plugin-replace": "^6.0.1",
 		"@rollup/plugin-typescript": "^12.1.0",
