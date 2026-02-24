@@ -1,21 +1,22 @@
 /* eslint-env node */
 
 import path from 'path';
+import {createRequire} from 'module';
 import {fileURLToPath} from 'url';
 
 import Alias from '@rollup/plugin-alias';
 import {nodeResolve} from '@rollup/plugin-node-resolve';
 import Replace from '@rollup/plugin-replace';
+import Terser from '@rollup/plugin-terser';
 import Typescript from '@rollup/plugin-typescript';
 import Autoprefixer from 'autoprefixer';
 import Postcss from 'postcss';
 import Cleanup from 'rollup-plugin-cleanup';
-import {terser as Terser} from 'rollup-plugin-terser';
 import {compile as sassCompile} from 'sass';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-import Package from './package.json';
+const require = createRequire(import.meta.url);
+const Package = require('./package.json');
 
 async function compileCss() {
 	const compiled = sassCompile('src/sass/plugin.scss', {
