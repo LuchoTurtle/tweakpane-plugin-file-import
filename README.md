@@ -111,7 +111,7 @@ If you want to contribute to this package, you are free to open a pull request. 
 
 > [!NOTE]
 >
-> You'll need to have `Node 16` or upwards installed
+> You'll need to have `Node 18` or upwards installed
 > in order to properly install and run `package.json` script commands.
 
 Install dependencies:
