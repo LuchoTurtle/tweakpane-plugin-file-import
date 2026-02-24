@@ -67,5 +67,9 @@
 	},
 	"peerDependencies": {
 		"tweakpane": "^4.0.0"
+	},
+	"overrides": {
+		"magic-string": "^0.30.0",
+		"html-encoding-sniffer": "^6.0.0"
 	}
 }
