@@ -8,24 +8,22 @@ A Tweakpane plugin for importing files.
   <img src="https://github.com/tweakpane/plugin-essentials/assets/17494745/218288c9-2cd9-4713-91b5-a0549be6f0ed" />
 </p>
 
-
 > [!WARNING]
-> 
+>
 > The version `1.0.0` and upwards of this package
 > only supports `Tweakpane v4`.
-> 
+>
 > If you are still using `Tweakpane v3`,
 > **you can only use the `v0` of this package**.
-> 
-> 
+>
 > You can install it.
-> 
+>
 > ```sh
 > npm i tweakpane-plugin-file-import@0.2.0
 > ```
-> 
+>
 > And use it like so.
-> 
+>
 > ```html
 > <script src="https://unpkg.com/tweakpane@3.0.5/dist/tweakpane.js"></script>
 > <script src="./tweakpane-plugin-file-import.min.js"></script>
@@ -35,8 +33,7 @@ A Tweakpane plugin for importing files.
 > </script>
 > ```
 
-
-# Installation
+## Installation
 
 You need [Tweakpane `v4`](https://github.com/cocopon/tweakpane) to install this plugin.
 
@@ -64,7 +61,7 @@ pane.registerPlugin(TweakpaneFileImportPlugin);
 > Check [`test/browser.html`](/test/browser.html) for an example
 > of the plugin being used.
 
-## Usage
+### Usage
 
 Simply initialize the params with an empty string and pass the optional parameters.
 
@@ -96,25 +93,21 @@ pane
 	.on('change', (ev) => {
 		console.log(ev.value);
 	});
-
 ```
 
-### Optional parameters
+#### Optional parameters
 
-| property  | type   | description                    |
-|-----------|--------|--------------------------------|
-| lineCount | int    | Number of lines for the height of the container. Similar to [FPS graph ](https://github.com/tweakpane/plugin-essentials#fps-graph)          |
-| filetypes     | array | Array of valid file extensions.             |
-| invalidFiletypeMessage     | string | String shown when the user tries to upload an invalid filetype.             |
+| property               | type   | description                                                                                                                       |
+| ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| lineCount              | int    | Number of lines for the height of the container. Similar to [FPS graph](https://github.com/tweakpane/plugin-essentials#fps-graph) |
+| filetypes              | array  | Array of valid file extensions.                                                                                                   |
+| invalidFiletypeMessage | string | String shown when the user tries to upload an invalid filetype.                                                                   |
 
-
-
-
-## Contributing
+### Contributing
 
 If you want to contribute to this package, you are free to open a pull request. 😊
 
-### Quickstart
+#### Quickstart
 
 > [!NOTE]
 >
@@ -136,12 +129,11 @@ npm start
 
 After this, simply open `test/browser.html` to see the results.
 
-
-### File structure
+#### File structure
 
 This project follows the same structure as any other [Tweakpane third-party plugin](https://github.com/tweakpane/plugin-template).
 
-```
+```bash
 |- src
 |  |- controller ...... Controller for the custom view
 |  |- sass ............ Plugin CSS
@@ -152,7 +144,3 @@ This project follows the same structure as any other [Tweakpane third-party plug
 `- test
    `- browser.html .... Plugin usage in an HTML file
 ```
-
-
-
-[tweakpane]: https://github.com/cocopon/tweakpane/

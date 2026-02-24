@@ -1,24 +1,25 @@
-'use strict';
+import {readFileSync, renameSync, statSync} from 'fs';
+import {sync as globSync} from 'glob';
+import {basename, dirname, join} from 'path';
+import {fileURLToPath} from 'url';
 
-const Fs = require('fs');
-const Glob = require('glob');
-const Path = require('path');
-const Package = require('../package');
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const Package = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));
 
 const PATTERN = 'dist/*';
 
-const paths = Glob.sync(PATTERN);
+const paths = globSync(PATTERN);
 paths.forEach((path) => {
-	const fileName = Path.basename(path);
-	if (Fs.statSync(path).isDirectory()) {
+	const fileName = basename(path);
+	if (statSync(path).isDirectory()) {
 		return;
 	}
 
 	const ext = fileName.match(/(\..+)$/)[1];
-	const base = Path.basename(fileName, ext);
-	const versionedPath = Path.join(
-		Path.dirname(path),
+	const base = basename(fileName, ext);
+	const versionedPath = join(
+		dirname(path),
 		`${base}-${Package.version}${ext}`,
 	);
-	Fs.renameSync(path, versionedPath);
+	renameSync(path, versionedPath);
 });
